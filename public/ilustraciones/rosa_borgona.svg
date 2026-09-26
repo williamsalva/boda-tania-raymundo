@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <defs>
+    <!-- Gradientes Pétalos Borgoña / Vino -->
+    <radialGradient id="rbVinoPetalo" cx="40%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#c94a91" />
+      <stop offset="40%" stop-color="#9b2548" />
+      <stop offset="85%" stop-color="#69102c" />
+      <stop offset="100%" stop-color="#4a1830" />
+    </radialGradient>
+    <radialGradient id="rbVinoOscuro" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#9b2548" />
+      <stop offset="65%" stop-color="#5a0e24" />
+      <stop offset="100%" stop-color="#380514" />
+    </radialGradient>
+    <radialGradient id="rbRosaRubor" cx="45%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#fff5f8" />
+      <stop offset="45%" stop-color="#f5c2d8" />
+      <stop offset="85%" stop-color="#d9729f" />
+      <stop offset="100%" stop-color="#b02a80" />
+    </radialGradient>
+
+    <!-- Hojas Eucalipto -->
+    <linearGradient id="rbEucalipto" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#96b299" />
+      <stop offset="50%" stop-color="#648369" />
+      <stop offset="100%" stop-color="#46604a" />
+    </linearGradient>
+    <linearGradient id="rbEucaliptoClaro" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c2d5c4" />
+      <stop offset="70%" stop-color="#8ba58e" />
+      <stop offset="100%" stop-color="#5a765e" />
+    </linearGradient>
+    <linearGradient id="rbOro" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fdf4db" />
+      <stop offset="50%" stop-color="#dfb76c" />
+      <stop offset="100%" stop-color="#a87f32" />
+    </linearGradient>
+    <filter id="rbShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#4a1830" flood-opacity="0.16" />
+    </filter>
+  </defs>
+
+  <!-- Hojas de fondo -->
+  <g opacity="0.95">
+    <path d="M 120 120 C 70 80, 80 30, 130 50 C 165 65, 155 110, 120 120 Z" fill="url(#rbEucalipto)" />
+    <path d="M 190 90 C 180 35, 230 20, 250 65 C 260 95, 220 115, 190 90 Z" fill="url(#rbEucaliptoClaro)" />
+    <path d="M 270 140 C 330 100, 360 140, 320 180 C 290 205, 255 175, 270 140 Z" fill="url(#rbEucalipto)" />
+    <path d="M 100 240 C 40 250, 50 310, 100 300 C 135 290, 130 245, 100 240 Z" fill="url(#rbEucaliptoClaro)" />
+    <path d="M 280 260 C 340 290, 310 350, 260 330 C 230 315, 250 270, 280 260 Z" fill="url(#rbEucalipto)" />
+
+    <!-- Ramitas con bayas y polen dorado -->
+    <path d="M 150 100 C 130 60, 90 50, 60 70" stroke="#5a765e" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="60" cy="70" r="4" fill="url(#rbOro)" />
+    <circle cx="80" cy="55" r="3" fill="url(#rbVinoPetalo)" />
+    <circle cx="100" cy="65" r="3.5" fill="url(#rbOro)" />
+    
+    <path d="M 260 250 C 290 290, 330 310, 360 300" stroke="#5a765e" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="360" cy="300" r="4" fill="url(#rbOro)" />
+    <circle cx="335" cy="315" r="3" fill="url(#rbVinoPetalo)" />
+  </g>
+
+  <!-- Rosa Central en Capas y Relieve -->
+  <g transform="translate(200, 200)" filter="url(#rbShadow)">
+    <!-- Capa 1: Pétalos Exteriores Desplegados -->
+    <path d="M -85 -15 C -105 -65, -45 -100, 0 -85 C 45 -100, 105 -65, 85 -15 C 115 45, 55 95, 0 90 C -55 95, -115 45, -85 -15 Z" fill="url(#rbVinoOscuro)" />
+    <path d="M -70 -10 C -88 -50, -30 -78, 0 -68 C 30 -78, 88 -50, 70 -10 C 92 35, 42 75, 0 70 C -42 75, -92 35, -70 -10 Z" fill="url(#rbVinoPetalo)" />
+
+    <!-- Capa 2: Pétalos Intermedios Ondulados con Rubor -->
+    <path d="M -55 -25 C -65 -55, -15 -62, 0 -48 C 15 -62, 65 -55, 55 -25 C 68 10, 35 50, 0 46 C -35 50, -68 10, -55 -25 Z" fill="url(#rbRosaRubor)" opacity="0.88" />
+    <path d="M -42 -20 C -50 -42, -10 -48, 0 -36 C 10 -48, 50 -42, 42 -20 C 52 5, 25 36, 0 32 C -25 36, -52 5, -42 -20 Z" fill="url(#rbVinoPetalo)" />
+
+    <!-- Capa 3: Pétalos Cercanos al Núcleo -->
+    <path d="M -30 -14 C -36 -32, -4 -35, 0 -24 C 4 -35, 36 -32, 30 -14 C 36 4, 18 24, 0 20 C -18 24, -36 4, -30 -14 Z" fill="url(#rbVinoOscuro)" />
+    <path d="M -20 -10 C -24 -22, 0 -25, 0 -15 C 0 -25, 24 -22, 20 -10 C 24 2, 10 14, 0 12 C -10 14, -24 2, -20 -10 Z" fill="url(#rbRosaRubor)" opacity="0.9" />
+
+    <!-- Capa 4: Núcleo en Espiral y Corazón de la Rosa -->
+    <path d="M -12 -5 C -15 -14, 0 -16, 0 -8 C 0 -16, 15 -14, 12 -5 C 15 2, 6 9, 0 7 C -6 9, -15 2, -12 -5 Z" fill="url(#rbVinoOscuro)" />
+    <circle cx="0" cy="0" r="3.5" fill="url(#rbOro)" />
+    <circle cx="-4" cy="2" r="2" fill="url(#rbOro)" />
+    <circle cx="4" cy="-2" r="2" fill="url(#rbOro)" />
+  </g>
+
+  <!-- Destellos de luz -->
+  <g fill="url(#rbOro)" opacity="0.85">
+    <path d="M 60 170 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" />
+    <path d="M 340 110 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" />
+    <circle cx="210" cy="80" r="2" />
+    <circle cx="180" cy="320" r="2" />
+  </g>
+</svg>

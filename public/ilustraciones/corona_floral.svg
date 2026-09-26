@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <defs>
+    <!-- Gradientes Pétalos Borgoña / Vino -->
+    <radialGradient id="corVinoPetalo" cx="40%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#c94a91" />
+      <stop offset="45%" stop-color="#9b2548" />
+      <stop offset="90%" stop-color="#69102c" />
+      <stop offset="100%" stop-color="#4a1830" />
+    </radialGradient>
+    <radialGradient id="corVinoOscuro" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#9b2548" />
+      <stop offset="70%" stop-color="#5a0e24" />
+      <stop offset="100%" stop-color="#3d0717" />
+    </radialGradient>
+
+    <!-- Gradientes Rosa Empolvado / Rubor -->
+    <radialGradient id="corRosaRubor" cx="45%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#fff5f8" />
+      <stop offset="40%" stop-color="#f5c2d8" />
+      <stop offset="85%" stop-color="#d9729f" />
+      <stop offset="100%" stop-color="#b02a80" />
+    </radialGradient>
+
+    <!-- Gradientes Hojas Eucalipto y Olivo -->
+    <linearGradient id="corEucalipto" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#96b299" />
+      <stop offset="50%" stop-color="#648369" />
+      <stop offset="100%" stop-color="#46604a" />
+    </linearGradient>
+    <linearGradient id="corEucaliptoClaro" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c2d5c4" />
+      <stop offset="70%" stop-color="#8ba58e" />
+      <stop offset="100%" stop-color="#5a765e" />
+    </linearGradient>
+
+    <!-- Oro Sutil -->
+    <linearGradient id="corOro" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fdf4db" />
+      <stop offset="50%" stop-color="#dfb76c" />
+      <stop offset="100%" stop-color="#a87f32" />
+    </linearGradient>
+
+    <filter id="corShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#4a1830" flood-opacity="0.12" />
+    </filter>
+  </defs>
+
+  <!-- ================= ARO Y GUIRNALDAS CIRCULARES BASE ================= -->
+  <!-- Aro sutil geométrico dorado de soporte -->
+  <circle cx="200" cy="200" r="145" stroke="url(#corOro)" stroke-width="1.2" stroke-dasharray="6 8" opacity="0.65" />
+  <circle cx="200" cy="200" r="140" stroke="url(#corOro)" stroke-width="0.8" opacity="0.4" />
+
+  <!-- Tallos circulares orgánicos -->
+  <!-- Arco Izquierdo -->
+  <path d="M 200 60 C 110 60, 55 125, 55 200 C 55 275, 110 340, 200 340" 
+        stroke="#5a765e" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.85" />
+  <!-- Arco Derecho -->
+  <path d="M 200 60 C 290 60, 345 125, 345 200 C 345 275, 290 340, 200 340" 
+        stroke="#5a765e" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.85" />
+
+  <!-- ================= HOJAS Y FOLLAJE EN LA CORONA ================= -->
+  <!-- Cuadrante Superior Izquierdo -->
+  <g opacity="0.92">
+    <path d="M 170 65 C 150 45, 170 30, 190 45 C 205 58, 185 75, 170 65 Z" fill="url(#corEucaliptoClaro)" />
+    <path d="M 130 85 C 105 75, 120 55, 140 70 C 155 82, 145 98, 130 85 Z" fill="url(#corEucalipto)" />
+    <path d="M 95 120 C 70 115, 80 90, 105 105 C 120 118, 110 132, 95 120 Z" fill="url(#corEucaliptoClaro)" />
+    <path d="M 70 165 C 45 165, 50 140, 75 150 C 90 162, 85 178, 70 165 Z" fill="url(#corEucalipto)" />
+
+    <!-- Bayas -->
+    <circle cx="155" cy="80" r="3.5" fill="url(#corVinoPetalo)" />
+    <circle cx="110" cy="115" r="3.5" fill="url(#corOro)" />
+    <circle cx="85" cy="155" r="3" fill="url(#corVinoOscuro)" />
+  </g>
+
+  <!-- Cuadrante Superior Derecho -->
+  <g opacity="0.92">
+    <path d="M 230 65 C 250 45, 230 30, 210 45 C 195 58, 215 75, 230 65 Z" fill="url(#corEucaliptoClaro)" />
+    <path d="M 270 85 C 295 75, 280 55, 260 70 C 245 82, 255 98, 270 85 Z" fill="url(#corEucalipto)" />
+    <path d="M 305 120 C 330 115, 320 90, 295 105 C 280 118, 290 132, 305 120 Z" fill="url(#corEucaliptoClaro)" />
+    <path d="M 330 165 C 355 165, 350 140, 325 150 C 310 162, 315 178, 330 165 Z" fill="url(#corEucalipto)" />
+
+    <!-- Bayas -->
+    <circle cx="245" cy="80" r="3.5" fill="url(#corVinoPetalo)" />
+    <circle cx="290" cy="115" r="3.5" fill="url(#corOro)" />
+    <circle cx="315" cy="155" r="3" fill="url(#corVinoOscuro)" />
+  </g>
+
+  <!-- Cuadrante Inferior Izquierdo -->
+  <g opacity="0.92">
+    <path d="M 68 235 C 45 235, 52 260, 75 250 C 90 238, 85 222, 68 235 Z" fill="url(#corEucaliptoClaro)" />
+    <path d="M 90 280 C 72 290, 85 310, 105 295 C 120 282, 108 268, 90 280 Z" fill="url(#corEucalipto)" />
+    <path d="M 130 318 C 115 335, 135 348, 150 330 C 160 315, 145 305, 130 318 Z" fill="url(#corEucaliptoClaro)" />
+
+    <!-- Bayas -->
+    <circle cx="82" cy="245" r="3.5" fill="url(#corOro)" />
+    <circle cx="112" cy="290" r="3.5" fill="url(#corVinoPetalo)" />
+  </g>
+
+  <!-- Cuadrante Inferior Derecho -->
+  <g opacity="0.92">
+    <path d="M 332 235 C 355 235, 348 260, 325 250 C 310 238, 315 222, 332 235 Z" fill="url(#corEucaliptoClaro)" />
+    <path d="M 310 280 C 328 290, 315 310, 295 295 C 280 282, 292 268, 310 280 Z" fill="url(#corEucalipto)" />
+    <path d="M 270 318 C 285 335, 265 348, 250 330 C 240 315, 255 305, 270 318 Z" fill="url(#corEucaliptoClaro)" />
+
+    <!-- Bayas -->
+    <circle cx="318" cy="245" r="3.5" fill="url(#corOro)" />
+    <circle cx="288" cy="290" r="3.5" fill="url(#corVinoPetalo)" />
+  </g>
+
+  <!-- ================= ARREGLO FLORAL PRINCIPAL INFERIOR (CLUSTER) ================= -->
+  <g id="clusterFloralInferior" filter="url(#corShadow)">
+    <!-- Flor Izquierda Rosa Empolvado -->
+    <g transform="translate(155, 330) rotate(-20)">
+      <path d="M-25 0 C -30 -20, -10 -28, 0 -22 C 10 -28, 30 -20, 25 0 C 30 20, 10 28, 0 22 C -10 28, -30 20, -25 0 Z" fill="url(#corRosaRubor)" />
+      <path d="M-15 -4 C -20 -15, 0 -18, 5 -8 C 12 -14, 18 -2, 12 8 C 14 18, 0 18, -6 10 C -16 10, -16 3, -15 -4 Z" fill="url(#corVinoPetalo)" opacity="0.65" />
+      <circle cx="0" cy="0" r="3.5" fill="url(#corOro)" />
+    </g>
+
+    <!-- Flor Derecha Capullo Borgoña -->
+    <g transform="translate(245, 330) rotate(20)">
+      <path d="M-24 0 C -28 -18, -8 -26, 0 -20 C 8 -26, 28 -18, 24 0 C 28 18, 8 26, 0 20 C -8 26, -28 18, -24 0 Z" fill="url(#corVinoOscuro)" />
+      <path d="M-14 -3 C -18 -14, 0 -16, 5 -7 C 12 -12, 16 -1, 10 7 C 12 16, 0 16, -5 9 C -15 9, -15 2, -14 -3 Z" fill="url(#corRosaRubor)" opacity="0.75" />
+      <circle cx="0" cy="0" r="3" fill="url(#corOro)" />
+    </g>
+
+    <!-- Rosa Protagonista Borgoña (Centro Inferior) -->
+    <g transform="translate(200, 340)">
+      <!-- Hojas bajo la rosa -->
+      <path d="M-30 20 C -45 40, -15 45, -5 25 Z" fill="url(#corEucalipto)" />
+      <path d="M30 20 C 45 40, 15 45, 5 25 Z" fill="url(#corEucaliptoClaro)" />
+
+      <!-- Capas de pétalos -->
+      <path d="M -40 -6 C -52 -28, -20 -44, 0 -36 C 20 -44, 52 -28, 40 -6 C 52 20, 24 40, 0 38 C -24 40, -52 20, -40 -6 Z" fill="url(#corVinoOscuro)" />
+      <path d="M -32 -4 C -40 -22, -12 -34, 0 -28 C 12 -34, 40 -22, 32 -4 C 42 16, 18 32, 0 30 C -18 32, -42 16, -32 -4 Z" fill="url(#corVinoPetalo)" />
+      <path d="M -24 -12 C -28 -24, -6 -28, 0 -20 C 6 -28, 28 -24, 24 -12 C 30 4, 16 22, 0 20 C -16 22, -30 4, -24 -12 Z" fill="url(#corRosaRubor)" opacity="0.85" />
+      <path d="M -16 -8 C -20 -18, -3 -20, 0 -14 C 3 -20, 20 -18, 16 -8 C 20 2, 10 14, 0 12 C -10 14, -20 2, -16 -8 Z" fill="url(#corVinoPetalo)" />
+      <path d="M -10 -4 C -12 -10, 0 -12, 0 -8 C 2 -12, 12 -10, 10 -4 C 12 1, 6 8, 0 6 C -6 8, -12 1, -10 -4 Z" fill="url(#corVinoOscuro)" />
+      <circle cx="0" cy="0" r="2" fill="url(#corOro)" />
+    </g>
+  </g>
+
+  <!-- ================= ARREGLO FLORAL SECUNDARIO SUPERIOR ================= -->
+  <g id="clusterFloralSuperior" filter="url(#corShadow)">
+    <g transform="translate(200, 60) rotate(180)">
+      <g transform="translate(-30, 0) scale(0.65)">
+        <path d="M-25 0 C -30 -20, -10 -28, 0 -22 C 10 -28, 30 -20, 25 0 C 30 20, 10 28, 0 22 C -10 28, -30 20, -25 0 Z" fill="url(#corRosaRubor)" />
+        <circle cx="0" cy="0" r="3" fill="url(#corOro)" />
+      </g>
+      <g transform="translate(30, 0) scale(0.65)">
+        <path d="M-24 0 C -28 -18, -8 -26, 0 -20 C 8 -26, 28 -18, 24 0 C 28 18, 8 26, 0 20 C -8 26, -28 18, -24 0 Z" fill="url(#corVinoOscuro)" />
+        <circle cx="0" cy="0" r="3" fill="url(#corOro)" />
+      </g>
+      <g transform="scale(0.75)">
+        <path d="M -32 -4 C -40 -22, -12 -34, 0 -28 C 12 -34, 40 -22, 32 -4 C 42 16, 18 32, 0 30 C -18 32, -42 16, -32 -4 Z" fill="url(#corVinoPetalo)" />
+        <path d="M -20 -10 C -24 -20, -4 -22, 0 -16 C 4 -22, 24 -20, 20 -10 C 24 3, 12 16, 0 14 C -12 16, -24 3, -20 -10 Z" fill="url(#corRosaRubor)" opacity="0.85" />
+        <circle cx="0" cy="0" r="2.5" fill="url(#corOro)" />
+      </g>
+    </g>
+  </g>
+
+  <!-- Destellos dorados en la corona -->
+  <g fill="url(#corOro)" opacity="0.8">
+    <path d="M200 130 l1.5 4 4 1.5 -4 1.5 -1.5 4 -1.5 -4 -4 -1.5 4 -1.5z" />
+    <path d="M200 270 l1.5 4 4 1.5 -4 1.5 -1.5 4 -1.5 -4 -4 -1.5 4 -1.5z" />
+    <circle cx="120" cy="200" r="1.5" />
+    <circle cx="280" cy="200" r="1.5" />
+  </g>
+</svg>

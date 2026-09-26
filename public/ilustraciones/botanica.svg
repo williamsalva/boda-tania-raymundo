@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 80" fill="none" stroke="#9b2548" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Central Star Sparkle -->
+  <path d="M80 34l1.5 5 5 1.5-5 1.5-1.5 5-1.5-5-5-1.5 5-1.5z" fill="#9b2548" stroke="none" />
+  <circle cx="80" cy="24" r="1.2" fill="#9b2548" stroke="none" />
+  <circle cx="80" cy="56" r="1.2" fill="#9b2548" stroke="none" />
+
+  <!-- Left Branch Stem -->
+  <path d="M72 40c-14-1-28 3-44 14" stroke-width="1.6" />
+  <!-- Left Leaves -->
+  <path d="M62 38c-3-4-8-4-10-1 3 4 8 4 10 1z" fill="#9b2548" fill-opacity="0.12" />
+  <path d="M52 43c-3 4-2 8 2 9 3-4 2-8-2-9z" fill="#9b2548" fill-opacity="0.12" />
+  <path d="M43 44c-4-3-8-2-9 2 4 3 8 2 9-2z" fill="#9b2548" fill-opacity="0.12" />
+  <path d="M34 50c-2 4-1 7 3 8 2-4 1-7-3-8z" fill="#9b2548" fill-opacity="0.12" />
+  <path d="M25 53c-4-2-7 0-7 4 4 2 7 0 7-4z" fill="#9b2548" fill-opacity="0.12" />
+
+  <!-- Right Branch Stem -->
+  <path d="M88 40c14-1 28 3 44 14" stroke-width="1.6" />
+  <!-- Right Leaves -->
+  <path d="M98 38c3-4 8-4 10-1-3 4-8 4-10 1z" fill="#9b2548" fill-opacity="0.12" />
+  <path d="M108 43c3 4 2 8-2 9-3-4-2-8 2-9z" fill="#9b2548" fill-opacity="0.12" />
+  <path d="M117 44c4-3 8-2 9 2-4 3-8 2-9-2z" fill="#9b2548" fill-opacity="0.12" />
+  <path d="M126 50c2 4 1 7-3 8-2-4-1-7 3-8z" fill="#9b2548" fill-opacity="0.12" />
+  <path d="M135 53c4-2 7 0 7 4-4 2-7 0-7-4z" fill="#9b2548" fill-opacity="0.12" />
+</svg>

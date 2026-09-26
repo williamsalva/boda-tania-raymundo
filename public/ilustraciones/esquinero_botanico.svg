@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 350" fill="none">
+  <defs>
+    <!-- Gradientes Pétalos Vino / Borgoña -->
+    <radialGradient id="esqVinoPetalo" cx="40%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#c94a91" />
+      <stop offset="45%" stop-color="#9b2548" />
+      <stop offset="90%" stop-color="#69102c" />
+      <stop offset="100%" stop-color="#4a1830" />
+    </radialGradient>
+    <radialGradient id="esqVinoOscuro" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#9b2548" />
+      <stop offset="70%" stop-color="#5a0e24" />
+      <stop offset="100%" stop-color="#3d0717" />
+    </radialGradient>
+
+    <!-- Gradientes Rosa Empolvado / Rubor -->
+    <radialGradient id="esqRosaRubor" cx="45%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#fff5f8" />
+      <stop offset="40%" stop-color="#f5c2d8" />
+      <stop offset="85%" stop-color="#d9729f" />
+      <stop offset="100%" stop-color="#b02a80" />
+    </radialGradient>
+
+    <!-- Gradientes Eucalipto y Salvia -->
+    <linearGradient id="esqEucalipto" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#96b299" />
+      <stop offset="50%" stop-color="#648369" />
+      <stop offset="100%" stop-color="#46604a" />
+    </linearGradient>
+    <linearGradient id="esqEucaliptoClaro" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c2d5c4" />
+      <stop offset="70%" stop-color="#8ba58e" />
+      <stop offset="100%" stop-color="#5a765e" />
+    </linearGradient>
+
+    <!-- Oro Sutil -->
+    <linearGradient id="esqOro" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fdf4db" />
+      <stop offset="50%" stop-color="#dfb76c" />
+      <stop offset="100%" stop-color="#a87f32" />
+    </linearGradient>
+
+    <filter id="esqShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#4a1830" flood-opacity="0.14" />
+    </filter>
+  </defs>
+
+  <!-- ================= TALLOS Y FOLLAJE HACIA LA DERECHA (HORIZONTAL) ================= -->
+  <g opacity="0.95">
+    <path d="M100 80 C 160 50, 230 40, 310 45" stroke="#5a765e" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M160 55 C 200 35, 250 20, 295 18" stroke="#5a765e" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Hojas hacia el borde superior-derecho -->
+    <path d="M310 45 C 330 35, 320 15, 295 28 C 275 38, 290 55, 310 45 Z" fill="url(#esqEucalipto)" />
+    <path d="M260 42 C 280 25, 265 8, 245 22 C 230 35, 245 52, 260 42 Z" fill="url(#esqEucaliptoClaro)" />
+    <path d="M210 48 C 230 30, 215 15, 195 28 C 180 40, 195 58, 210 48 Z" fill="url(#esqEucalipto)" />
+    <path d="M295 18 C 310 5, 290 -8, 275 5 C 260 18, 275 30, 295 18 Z" fill="url(#esqEucaliptoClaro)" />
+    <path d="M235 25 C 250 12, 235 -2, 218 10 C 205 22, 220 35, 235 25 Z" fill="url(#esqEucalipto)" />
+
+    <!-- Bayas doradas y vino -->
+    <circle cx="270" cy="58" r="4" fill="url(#esqVinoOscuro)"/>
+    <circle cx="282" cy="64" r="3" fill="url(#esqVinoPetalo)"/>
+    <circle cx="258" cy="65" r="3.5" fill="url(#esqOro)"/>
+    <circle cx="320" cy="35" r="3" fill="url(#esqOro)"/>
+  </g>
+
+  <!-- ================= TALLOS Y FOLLAJE HACIA ABAJO (VERTICAL) ================= -->
+  <g opacity="0.95">
+    <path d="M80 100 C 50 160, 40 230, 45 310" stroke="#5a765e" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M55 160 C 35 200, 20 250, 18 295" stroke="#5a765e" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Hojas hacia el borde izquierdo-inferior -->
+    <path d="M45 310 C 35 330, 15 320, 28 295 C 38 275, 55 290, 45 310 Z" fill="url(#esqEucalipto)" />
+    <path d="M42 260 C 25 280, 8 265, 22 245 C 35 230, 52 245, 42 260 Z" fill="url(#esqEucaliptoClaro)" />
+    <path d="M48 210 C 30 230, 15 215, 28 195 C 40 180, 58 195, 48 210 Z" fill="url(#esqEucalipto)" />
+    <path d="M18 295 C 5 310, -8 290, 5 275 C 18 260, 30 275, 18 295 Z" fill="url(#esqEucaliptoClaro)" />
+    <path d="M25 235 C 12 250, -2 235, 10 218 C 22 205, 35 220, 25 235 Z" fill="url(#esqEucalipto)" />
+
+    <!-- Bayas doradas y vino -->
+    <circle cx="58" cy="270" r="4" fill="url(#esqVinoOscuro)"/>
+    <circle cx="64" cy="282" r="3" fill="url(#esqVinoPetalo)"/>
+    <circle cx="65" cy="258" r="3.5" fill="url(#esqOro)"/>
+    <circle cx="35" cy="320" r="3" fill="url(#esqOro)"/>
+  </g>
+
+  <!-- ================= FLORES DEL ESQUINERO ================= -->
+  <!-- Flor Rosa Rubor (Superior) -->
+  <g transform="translate(130, 55) rotate(20)" filter="url(#esqShadow)">
+    <path d="M-30 0 C -35 -25, -10 -35, 0 -28 C 10 -35, 35 -25, 30 0 C 35 25, 10 35, 0 28 C -10 35, -35 25, -30 0 Z" fill="url(#esqRosaRubor)" />
+    <path d="M-20 -5 C -25 -20, 0 -24, 8 -12 C 18 -20, 24 -5, 15 10 C 18 22, 0 24, -8 15 C -22 15, -22 5, -20 -5 Z" fill="url(#esqVinoPetalo)" opacity="0.6" />
+    <circle cx="0" cy="0" r="4.5" fill="url(#esqOro)" />
+  </g>
+
+  <!-- Capullo Borgoña (Inferior) -->
+  <g transform="translate(55, 130) rotate(-25)" filter="url(#esqShadow)">
+    <path d="M-28 0 C -32 -22, -8 -32, 0 -25 C 8 -32, 32 -22, 28 0 C 32 22, 8 32, 0 25 C -8 32, -32 22, -28 0 Z" fill="url(#esqVinoOscuro)" />
+    <path d="M-18 -5 C -22 -18, 0 -20, 7 -10 C 16 -18, 20 -4, 13 8 C 15 20, 0 20, -7 13 C -18 13, -18 4, -18 -5 Z" fill="url(#esqRosaRubor)" opacity="0.75" />
+    <circle cx="0" cy="0" r="4" fill="url(#esqOro)" />
+  </g>
+
+  <!-- Rosa Protagonista Borgoña en la Esquina Central -->
+  <g transform="translate(95, 95)" filter="url(#esqShadow)">
+    <!-- Hojas bajo la rosa -->
+    <path d="M-40 -20 C -55 -45, -20 -55, -8 -35 Z" fill="url(#esqEucalipto)" />
+    <path d="M-20 -40 C -45 -55, -55 -20, -35 -8 Z" fill="url(#esqEucaliptoClaro)" />
+    <path d="M30 30 C 50 45, 45 60, 20 50 Z" fill="url(#esqEucalipto)" />
+
+    <!-- Pétalos Exteriores -->
+    <path d="M -50 -8 C -65 -35, -25 -55, 0 -45 C 25 -55, 65 -35, 50 -8 C 65 25, 30 52, 0 50 C -30 52, -65 25, -50 -8 Z" fill="url(#esqVinoOscuro)" />
+    <path d="M -40 -5 C -50 -28, -15 -42, 0 -35 C 15 -42, 50 -28, 40 -5 C 52 20, 22 40, 0 38 C -22 40, -52 20, -40 -5 Z" fill="url(#esqVinoPetalo)" />
+    
+    <!-- Pétalos intermedios con rubor -->
+    <path d="M -30 -15 C -35 -30, -8 -35, 0 -26 C 8 -35, 35 -30, 30 -15 C 38 5, 20 28, 0 25 C -20 28, -38 5, -30 -15 Z" fill="url(#esqRosaRubor)" opacity="0.85" />
+    <path d="M -22 -10 C -26 -22, -4 -25, 0 -18 C 4 -25, 26 -22, 22 -10 C 26 3, 14 18, 0 16 C -14 18, -26 3, -22 -10 Z" fill="url(#esqVinoPetalo)" />
+
+    <!-- Centro espiral -->
+    <path d="M -14 -6 C -16 -14, 0 -16, 0 -10 C 2 -16, 16 -14, 14 -6 C 16 2, 8 10, 0 8 C -8 10, -16 2, -14 -6 Z" fill="url(#esqVinoOscuro)" />
+    <circle cx="0" cy="0" r="2.5" fill="url(#esqOro)" />
+    <circle cx="-3" cy="2" r="1.5" fill="url(#esqOro)" />
+    <circle cx="3" cy="-2" r="1.5" fill="url(#esqOro)" />
+  </g>
+
+  <!-- Destellos dorados -->
+  <g fill="url(#esqOro)" opacity="0.85">
+    <path d="M190 85 l2 4 4 2 -4 2 -2 4 -2 -4 -4 -2 4 -2z" />
+    <path d="M85 190 l2 4 4 2 -4 2 -2 4 -2 -4 -4 -2 4 -2z" />
+    <circle cx="150" cy="115" r="1.5" />
+    <circle cx="115" cy="150" r="1.5" />
+  </g>
+</svg>

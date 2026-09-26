@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="#9b2548" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Concierge Bell Top Finial -->
+  <circle cx="60" cy="30" r="3.5" fill="#9b2548" />
+  <path d="M60 33.5v7" />
+  
+  <!-- Bell Dome -->
+  <path d="M34 66c0-14.36 11.64-26 26-26s26 11.64 26 26c1.5 0 3 .8 3 2.5 0 1.2-.8 2.5-3 2.5H34c-2.2 0-3-1.3-3-2.5 0-1.7 1.5-2.5 3-2.5z" />
+  
+  <!-- Bell Base Stand -->
+  <path d="M26 77h68c2.2 0 4 1.8 4 4v2H22v-2c0-2.2 1.8-4 4-4z" />
+  <path d="M20 83h80" />
+  
+  <!-- Delicate sparkles and botanicals -->
+  <path d="M38 32l1 3 3 1-3 1-1 3-1-3-3-1 3-1z" fill="#9b2548" stroke="none" />
+  <path d="M84 40l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z" fill="#9b2548" stroke="none" />
+  <circle cx="89" cy="52" r="1" fill="#9b2548" stroke="none" />
+  <circle cx="31" cy="48" r="1" fill="#9b2548" stroke="none" />
+  
+  <!-- Subtle Olive Branch Accent underneath -->
+  <path d="M42 98c8-3 18-3 26 0" stroke-width="1.2" stroke-dasharray="1 3" />
+</svg>

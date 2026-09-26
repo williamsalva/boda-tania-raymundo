@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450" fill="none">
+  <defs>
+    <!-- Gradientes Eucalipto y Salvia -->
+    <linearGradient id="reEucalipto" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a4bea7" />
+      <stop offset="50%" stop-color="#648369" />
+      <stop offset="100%" stop-color="#46604a" />
+    </linearGradient>
+    <linearGradient id="reEucaliptoClaro" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d0e2d2" />
+      <stop offset="60%" stop-color="#8ba58e" />
+      <stop offset="100%" stop-color="#5a765e" />
+    </linearGradient>
+    <!-- Vino y Oro -->
+    <radialGradient id="reVino" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#c94a91" />
+      <stop offset="60%" stop-color="#9b2548" />
+      <stop offset="100%" stop-color="#4a1830" />
+    </radialGradient>
+    <linearGradient id="reOro" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fdf4db" />
+      <stop offset="50%" stop-color="#dfb76c" />
+      <stop offset="100%" stop-color="#a87f32" />
+    </linearGradient>
+    <filter id="reShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#46604a" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <!-- Tallo Curvo Principal -->
+  <path d="M 150 430 C 145 350, 160 260, 140 180 C 130 120, 155 60, 150 20" 
+        stroke="#5a765e" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.9" />
+
+  <!-- Hojas a lo largo del tallo con sombra -->
+  <g filter="url(#reShadow)">
+    <!-- Hojas Base -->
+    <path d="M 148 370 C 100 380, 70 340, 110 320 C 135 308, 155 340, 148 370 Z" fill="url(#reEucalipto)" />
+    <path d="M 152 350 C 200 360, 230 320, 190 300 C 165 288, 145 320, 152 350 Z" fill="url(#reEucaliptoClaro)" />
+
+    <!-- Hojas Nivel Medio -->
+    <path d="M 145 290 C 85 295, 60 250, 105 230 C 130 218, 150 255, 145 290 Z" fill="url(#reEucaliptoClaro)" />
+    <path d="M 150 260 C 210 265, 235 220, 190 200 C 165 188, 145 225, 150 260 Z" fill="url(#reEucalipto)" />
+
+    <!-- Hojas Superiores -->
+    <path d="M 138 200 C 90 195, 75 155, 115 140 C 135 132, 148 165, 138 200 Z" fill="url(#reEucalipto)" />
+    <path d="M 142 165 C 190 160, 205 120, 165 105 C 145 98, 132 130, 142 165 Z" fill="url(#reEucaliptoClaro)" />
+
+    <!-- Hojas Corona Punta -->
+    <path d="M 140 100 C 105 85, 110 50, 135 55 C 150 60, 148 85, 140 100 Z" fill="url(#reEucaliptoClaro)" />
+    <path d="M 148 70 C 180 55, 175 25, 150 30 C 138 35, 142 55, 148 70 Z" fill="url(#reEucalipto)" />
+    <path d="M 150 20 C 140 -5, 160 -5, 150 20 Z" fill="url(#reEucaliptoClaro)" />
+  </g>
+
+  <!-- Bayas Vino y Oro intercaladas -->
+  <g>
+    <circle cx="120" cy="310" r="4.5" fill="url(#reVino)" />
+    <circle cx="178" cy="285" r="4" fill="url(#reOro)" />
+    <circle cx="115" cy="220" r="4" fill="url(#reOro)" />
+    <circle cx="180" cy="188" r="4.5" fill="url(#reVino)" />
+    <circle cx="122" cy="130" r="3.5" fill="url(#reVino)" />
+    <circle cx="162" cy="98" r="3.5" fill="url(#reOro)" />
+  </g>
+</svg>
