@@ -1,5 +1,6 @@
 import { obtenerAdmin } from "@/lib/admin";
 import { listarFamilias } from "@/lib/familias";
+import { listarAsientos, listarMesas } from "@/lib/mesas";
 
 const ESTADO = { pendiente: "Pendiente", si: "Asistirá", no: "No asistirá" } as const;
 
@@ -13,12 +14,24 @@ export async function GET(request: Request) {
   if (!(await obtenerAdmin())) return new Response("No autorizado", { status: 401 });
 
   const origen = new URL(request.url).origin;
-  const filas = [["Familia", "Invitado", "Estado", "Teléfono", "Enlace", "Mensaje"]];
-  for (const f of await listarFamilias()) {
+  const [familias, mesas, asientos] = await Promise.all([listarFamilias(), listarMesas(), listarAsientos()]);
+  const nombreMesa = new Map(mesas.map((m) => [m.id, m.nombre]));
+  const mesaDe = new Map(asientos.map((a) => [`${a.familia_id}::${a.invitado}`, nombreMesa.get(a.mesa_id) ?? ""]));
+
+  const filas = [["Familia", "Invitado", "Estado", "Mesa", "Teléfono", "Enlace", "Mensaje"]];
+  for (const f of familias) {
     for (const invitado of f.invitados) {
       const estado =
         f.asistencia === "pendiente" ? "pendiente" : f.asistentes?.includes(invitado) ? "si" : "no";
-      filas.push([f.nombre, invitado, ESTADO[estado], f.telefono ?? "", `${origen}/${f.slug}`, f.mensaje ?? ""]);
+      filas.push([
+        f.nombre,
+        invitado,
+        ESTADO[estado],
+        mesaDe.get(`${f.id}::${invitado}`) ?? "",
+        f.telefono ?? "",
+        `${origen}/${f.slug}`,
+        f.mensaje ?? "",
+      ]);
     }
   }
 

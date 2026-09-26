@@ -47,6 +47,28 @@ from public.familias f
 cross join lateral unnest(f.invitados) as i(invitado)
 order by f.nombre, i.invitado;
 
+-- ——— Organizador de mesas ———
+
+create table if not exists public.mesas (
+  id uuid primary key default gen_random_uuid(),
+  nombre text not null,
+  capacidad int not null default 12 check (capacidad between 1 and 50),
+  orden int not null default 0,
+  created_at timestamptz not null default now()
+);
+
+-- Un invitado se identifica por su familia y su nombre; cada persona ocupa un solo asiento.
+create table if not exists public.asientos (
+  familia_id uuid not null references public.familias (id) on delete cascade,
+  invitado text not null,
+  mesa_id uuid not null references public.mesas (id) on delete cascade,
+  primary key (familia_id, invitado)
+);
+create index if not exists asientos_mesa_idx on public.asientos (mesa_id);
+
+alter table public.mesas enable row level security;
+alter table public.asientos enable row level security;
+
 -- Ejemplo de alta (el slug es lo que va en la URL: tudominio.com/familia-alba-garcia)
 insert into public.familias (slug, nombre, invitados) values
   ('familia-alba-garcia', 'Familia Alba García', array['María Alba', 'José Alba', 'Ana Alba', 'Luis Alba']),

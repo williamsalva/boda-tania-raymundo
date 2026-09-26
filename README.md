@@ -30,7 +30,10 @@ La URL de cada familia tolera mayúsculas, espacios y acentos: `/Familia Alba Ga
 - Resumen: invitados, confirmados, no asistirán, pendientes y últimas respuestas.
 - Familias: agregar, editar y eliminar; buscar por familia, invitado o teléfono; filtrar por estado.
 - Por familia: copiar su enlace, enviarlo por WhatsApp con mensaje listo, ver quién confirmó.
-- Exportar a Excel (CSV) con una fila por invitado.
+- Mesas (`/admin/mesas`): mesas de 12 lugares por defecto (capacidad editable por mesa), arrastrar
+  invitados o seleccionarlos y elegir mesa, sentar familias completas y crear las mesas que falten.
+  Marca a quien ya está sentado pero después dijo que no va.
+- Exportar a Excel (CSV) con una fila por invitado, incluida su mesa.
 
 Seguridad: solo entran correos de `ADMIN_EMAILS` con sesión válida de Supabase; cada página y
 acción del panel lo verifica en el servidor. La tabla tiene RLS sin políticas, así que la llave

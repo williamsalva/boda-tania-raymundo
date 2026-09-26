@@ -45,7 +45,7 @@ export const supabaseConfigurado = Boolean(
 let cliente: SupabaseClient | null = null;
 
 /** Cliente con la service role key: solo servidor, salta RLS. */
-function supabase() {
+export function supabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) return null;
@@ -55,7 +55,11 @@ function supabase() {
 
 // Sin Supabase configurado (desarrollo local) usamos familias de ejemplo en memoria.
 // Vive en globalThis para que páginas, acciones y rutas (empaquetadas por separado) compartan los datos.
-const global = globalThis as typeof globalThis & { __familiasDemo?: Map<string, Familia> };
+const global = globalThis as typeof globalThis & {
+  __familiasDemo?: Map<string, Familia>;
+  /** Asientos del modo demo (los administra lib/mesas.ts). */
+  __asientosDemo?: { familia_id: string; invitado: string; mesa_id: string }[];
+};
 const demo = (global.__familiasDemo ??= crearDemo());
 
 function crearDemo() {
@@ -164,6 +168,10 @@ export async function actualizarFamilia(id: string, datos: DatosFamilia) {
     const asistentes = actual.asistentes?.filter((n) => datos.invitados.includes(n)) ?? null;
     demo.delete(actual.slug);
     demo.set(datos.slug, { ...actual, ...datos, id: datos.slug, asistentes, ...estadoDe(asistentes) });
+    // En demo el id es el slug: los asientos siguen a la familia y se quitan los de invitados borrados.
+    global.__asientosDemo = global.__asientosDemo
+      ?.map((a) => (a.familia_id === id ? { ...a, familia_id: datos.slug } : a))
+      .filter((a) => a.familia_id !== datos.slug || datos.invitados.includes(a.invitado));
     return;
   }
 
@@ -182,6 +190,14 @@ export async function actualizarFamilia(id: string, datos: DatosFamilia) {
     .update({ ...datos, asistentes, ...estadoDe(asistentes) })
     .eq("id", id);
   if (e2) throw error("actualizar la familia", e2);
+
+  // Quien ya no está en la lista pierde su lugar en las mesas.
+  const { error: e3 } = await db
+    .from("asientos")
+    .delete()
+    .eq("familia_id", id)
+    .not("invitado", "in", `(${datos.invitados.map((n) => `"${n.replace(/"/g, '\\"')}"`).join(",")})`);
+  if (e3) throw error("actualizar las mesas", e3);
 }
 
 export async function eliminarFamilia(id: string) {
@@ -189,6 +205,7 @@ export async function eliminarFamilia(id: string) {
   if (!db) {
     const actual = [...demo.values()].find((f) => f.id === id);
     if (actual) demo.delete(actual.slug);
+    global.__asientosDemo = global.__asientosDemo?.filter((a) => a.familia_id !== id);
     return;
   }
 
