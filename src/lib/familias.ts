@@ -195,3 +195,16 @@ export async function eliminarFamilia(id: string) {
   const { error: e } = await db.from("familias").delete().eq("id", id);
   if (e) throw error("eliminar la familia", e);
 }
+
+/**
+ * Consulta mínima para que Supabase registre actividad: el plan gratis pausa
+ * los proyectos tras 7 días sin uso. La llama el cron de Vercel (vercel.json).
+ */
+export async function tocarBaseDeDatos() {
+  const db = supabase();
+  if (!db) return { supabase: false, familias: demo.size };
+
+  const { count, error: e } = await db.from("familias").select("id", { count: "exact", head: true });
+  if (e) throw error("consultar Supabase", e);
+  return { supabase: true, familias: count ?? 0 };
+}

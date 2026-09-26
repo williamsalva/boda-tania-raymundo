@@ -39,6 +39,13 @@ pública no puede leer ni escribir datos.
 Sin variables de Supabase, en local el panel abre en **modo demo** (sin login, datos de ejemplo
 en memoria). En producción ese modo nunca se activa.
 
+## Mantener Supabase activo (plan gratis)
+
+Supabase pausa los proyectos gratis tras 7 días sin actividad. `vercel.json` programa un cron de
+Vercel (incluido en el plan Hobby) que llama a `/api/mantener-activo` los días 1, 6, 11, 16, 21,
+26 y 31 de cada mes a las 15:00 UTC; nunca pasan más de 5 días sin consulta. Opcional: define
+`CRON_SECRET` en Vercel para que solo el cron pueda llamar esa ruta.
+
 ## Contenido
 
 Todo el texto de la invitación (nombres, horarios, padres, hoteles, mesa de regalos, canción)
