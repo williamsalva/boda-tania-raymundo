@@ -66,7 +66,7 @@ export const PADRES = {
 };
 
 // TODO: el mensaje original venía cortado ("Julio César Rodr…"). Confirmar el nombre completo con Tania.
-export const PADRINOS_VELACION = ["Ahtziri Janeth Alba García", "Julio César Rodr…"];
+export const PADRINOS_VELACION = ["Julio César Rodr…", "Ahtziri Janeth Alba García"];
 
 export const MESA_REGALOS = {
   tienda: "Liverpool",
