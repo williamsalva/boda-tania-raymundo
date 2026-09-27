@@ -65,7 +65,7 @@ export const PADRES = {
   novio: ["Carlos García Mares", "† Marina García León"],
 };
 
-export const PADRINOS_VELACION = ["Julio César Rodríguez", "Ahtziri Janeth Alba García"];
+export const PADRINOS_VELACION = ["Julio César Rodríguez Ortega", "Ahtziri Janeth Alba García"];
 
 export const MESA_REGALOS = {
   tienda: "Liverpool",
