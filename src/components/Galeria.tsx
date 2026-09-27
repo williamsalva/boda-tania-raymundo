@@ -7,7 +7,7 @@ import rosa from "../../public/flores/sueltas/rosa.png";
 import tulipan from "../../public/flores/sueltas/tulipan.png";
 import type { CSSProperties } from "react";
 import { NOVIOS } from "@/lib/boda";
-import { Divisor, Esquinas } from "./Ornamentos";
+import { Esquinas } from "./Ornamentos";
 import { Revelar } from "./Revelar";
 
 // Collage tipo "flatlay": polaroids repartidas y encimadas sobre la mesa, con flores sueltas,
@@ -101,7 +101,6 @@ export function Galeria() {
             <p className="font-serif uppercase tracking-[0.2em] text-[calc(var(--w)*0.09cqw)] md:text-[calc(var(--dw)*0.09cqw)] text-vino">
               historia
             </p>
-            <Divisor className="mt-2 scale-[0.6]" />
           </div>
         </Revelar>
 

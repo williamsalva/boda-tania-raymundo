@@ -47,7 +47,6 @@ export const ILUSTRACIONES = {
   rsvp: "/ilustraciones/rsvp_sobre_lacre.jpg",
   regalos: "/ilustraciones/mesa_regalos.jpg",
   hospedaje: "/ilustraciones/hospedaje.svg",
-  cancion: "/ilustraciones/cancion.svg",
   botanica: "/ilustraciones/botanica.svg",
   ramillete: "/ilustraciones/ramillete_floral.svg",
   esquinero: "/ilustraciones/esquinero_botanico.svg",
@@ -94,8 +93,6 @@ export const HOSPEDAJE = [
     ],
   },
 ];
-
-export const SPOTIFY_TRACK = "2kfGoV9a5dbSKCNmUWH2ZF";
 
 export const GALERIA = {
   url: "https://edgarcruzfotografia40.pixieset.com/savethedatetaniayraymundo/",

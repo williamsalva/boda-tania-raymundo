@@ -14,7 +14,6 @@ import {
   NOVIOS,
   PADRES,
   PADRINOS_VELACION,
-  SPOTIFY_TRACK,
   VERSICULO,
   mapsBusqueda,
 } from "@/lib/boda";
@@ -26,7 +25,7 @@ import regalo from "../../public/ilustraciones/linea/regalo.png";
 import vestimenta from "../../public/ilustraciones/linea/vestimenta.png";
 import { CuentaRegresiva } from "./CuentaRegresiva";
 import { Galeria } from "./Galeria";
-import { Divisor, Esquinas } from "./Ornamentos";
+import { Esquinas } from "./Ornamentos";
 import { Revelar } from "./Revelar";
 import { Rsvp } from "./Rsvp";
 import { Sobre } from "./Sobre";
@@ -68,7 +67,6 @@ function Seccion({
             )}
             {antetitulo && <p className="etiqueta text-rosa mb-3">{antetitulo}</p>}
             <h2 className="titulo-seccion">{titulo}</h2>
-            <Divisor className="mt-5" />
           </Revelar>
         )}
         {children}
@@ -131,7 +129,6 @@ export function Invitacion({ familia }: { familia?: Familia }) {
             <span className="block text-4xl my-1 md:inline md:mx-5 md:text-6xl">&</span>
             {NOVIOS.elCorto}
           </h1>
-          <Divisor className="mt-5 !text-white/70" />
           <p className="mt-4 font-serif text-xl sm:text-2xl tracking-[0.3em]">{FECHA_TEXTO}</p>
         </div>
       </header>
@@ -157,7 +154,6 @@ export function Invitacion({ familia }: { familia?: Familia }) {
           <p className="font-script text-4xl sm:text-5xl text-vino text-balance">{NOVIOS.el}</p>
         </Revelar>
         <Revelar retraso={300} className="mt-12">
-          <Divisor className="mb-10" />
           <p className="text-xl leading-relaxed max-w-xl mx-auto">
             Con la bendición de Dios y de nuestros padres, tenemos el gusto de invitarte a celebrar
             nuestra boda.
@@ -171,8 +167,7 @@ export function Invitacion({ familia }: { familia?: Familia }) {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,#c94a91_0%,transparent_55%),radial-gradient(circle_at_90%_100%,#c40a78_0%,transparent_50%)] opacity-50" />
         <div className="relative">
           <p className="etiqueta text-white/80 mb-3">Faltan</p>
-          <p className="font-script text-4xl sm:text-5xl text-white">para el gran día</p>
-          <Divisor className="mt-4 mb-10 !text-white/60" />
+          <p className="font-script text-4xl sm:text-5xl text-white mb-10">para el gran día</p>
           <CuentaRegresiva fecha={FECHA_BODA} />
         </div>
       </section>
@@ -190,8 +185,7 @@ export function Invitacion({ familia }: { familia?: Familia }) {
                 />
                 <p className="font-script text-5xl text-vino">{evento.titulo}</p>
                 <p className="mt-3 font-serif text-3xl font-light tracking-wider">{evento.hora}</p>
-                <Divisor className="my-5 scale-75" />
-                <p className="text-xl leading-snug max-w-[16rem] flex-1">{evento.lugar}</p>
+                <p className="mt-5 text-xl leading-snug max-w-[16rem] flex-1">{evento.lugar}</p>
                 <div className="mt-8">
                   <Boton href={evento.mapa}>Cómo llegar</Boton>
                 </div>
@@ -225,8 +219,7 @@ export function Invitacion({ familia }: { familia?: Familia }) {
             {CODIGO_VESTIMENTA.tipo}
           </p>
           <p className="mt-2 etiqueta text-rosa">{CODIGO_VESTIMENTA.nota}</p>
-          <Divisor className="my-6 scale-75" />
-          <p className="text-lg italic leading-relaxed text-tinta/80 text-balance">
+          <p className="mt-6 text-lg italic leading-relaxed text-tinta/80 text-balance">
             Agradecemos acompañarnos de rigurosa etiqueta y reservar el color blanco exclusivamente
             para la novia.
           </p>
@@ -246,7 +239,6 @@ export function Invitacion({ familia }: { familia?: Familia }) {
           </Revelar>
         </div>
         <Revelar className="mt-16">
-          <Divisor className="mb-10" />
           <p className="etiqueta text-rosa mb-4">Padrinos de velación</p>
           <Nombres nombres={PADRINOS_VELACION} />
         </Revelar>
@@ -265,24 +257,9 @@ export function Invitacion({ familia }: { familia?: Familia }) {
         </Revelar>
       </Seccion>
 
-      {/* Canción */}
-      <Seccion fondo="perla" antetitulo="Dale play" titulo="Nuestra canción">
-        <Revelar className="tarjeta mx-auto max-w-md p-5">
-          <iframe
-            title="Nuestra canción en Spotify"
-            src={`https://open.spotify.com/embed/track/${SPOTIFY_TRACK}?utm_source=generator`}
-            width="100%"
-            height="152"
-            loading="lazy"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            className="relative z-10 block rounded-xl border-0"
-          />
-        </Revelar>
-      </Seccion>
-
       {/* Regalos */}
       <Seccion
-        fondo="rubor"
+        fondo="perla"
         antetitulo="Un detalle"
         titulo="Mesa de regalos"
         ilustracion={{ src: regalo, alt: "Ilustración de un regalo con moño", className: "w-28" }}
@@ -305,7 +282,7 @@ export function Invitacion({ familia }: { familia?: Familia }) {
       </Seccion>
 
       {/* Hospedaje */}
-      <Seccion fondo="perla" antetitulo="Si vienes de fuera" titulo="Hospedaje">
+      <Seccion fondo="rubor" antetitulo="Si vienes de fuera" titulo="Hospedaje">
         <Revelar>
           <p className="text-xl leading-relaxed max-w-xl mx-auto text-balance">
             Para nuestros invitados que nos acompañan desde fuera de Guadalajara, les compartimos
@@ -343,7 +320,6 @@ export function Invitacion({ familia }: { familia?: Familia }) {
           <Esquinas cuales={["sup-izq", "sup-der"]} tam="w-28 sm:w-40" />
           <p className="relative etiqueta text-rosa mb-3 mt-24 sm:mt-20">R. S. V. P.</p>
           <h2 className="titulo-seccion">Confirma tu asistencia</h2>
-          <Divisor className="mt-5" />
           {familia ? (
             <div className="relative z-10">
               <p className="mt-10 font-serif italic text-2xl text-tinta">{familia.nombre}</p>
@@ -377,7 +353,6 @@ export function Invitacion({ familia }: { familia?: Familia }) {
         <p className="font-script text-[2.6rem] sm:text-5xl whitespace-nowrap">
           {NOVIOS.ellaCorto} & {NOVIOS.elCorto}
         </p>
-        <Divisor className="mt-4 !text-white/60" />
         <p className="mt-4 font-serif tracking-[0.3em]">{FECHA_TEXTO}</p>
         <p className="mt-8 etiqueta text-white/70">¡Te esperamos!</p>
       </footer>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { NOVIOS } from "@/lib/boda";
-import { Divisor, Esquinas } from "./Ornamentos";
+import { Esquinas } from "./Ornamentos";
 
 /**
  * Pantalla de bienvenida: sobre rubor con solapa, sello de lacre T&R y ramitas a línea.
@@ -40,7 +40,7 @@ export function Sobre({ para }: { para?: string }) {
       aria-label="Invitación de boda de Tania y Raymundo"
     >
       {/* Marco de flores de acuarela en las cuatro esquinas */}
-      <Esquinas tam="w-[34vw] max-w-[280px] sm:w-[30vw]" />
+      <Esquinas tam="w-[19vw] max-w-[155px] sm:w-[16vw]" />
 
       {/* Contenedor principal centrado */}
       <div className="relative flex flex-col items-center justify-center w-full max-w-lg my-auto py-4 z-10">
@@ -52,7 +52,6 @@ export function Sobre({ para }: { para?: string }) {
             <span className="text-rosa">&amp;</span>{" "}
             {NOVIOS.elCorto}
           </h1>
-          <Divisor className="mt-3" />
           {para && (
             <p className="font-serif italic text-lg sm:text-xl text-tinta mt-3">
               Con cariño para {para}
