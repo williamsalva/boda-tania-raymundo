@@ -247,13 +247,8 @@ export function Invitacion({ familia }: { familia?: Familia }) {
       {/* Galería */}
       <Seccion fondo="rubor" antetitulo="Momentos" titulo="Galería" ancho="max-w-5xl">
         <Galeria />
-        <Revelar className="mt-12 space-y-4">
+        <Revelar className="mt-12">
           <Boton href={GALERIA.url}>Ver galería completa</Boton>
-          <p className="text-base text-tinta/70">
-            Para descargar las fotos usa el NIP <strong className="text-vino">{GALERIA.nip}</strong>
-            <br />
-            <span className="text-sm">{GALERIA.fotografo}</span>
-          </p>
         </Revelar>
       </Seccion>
 
