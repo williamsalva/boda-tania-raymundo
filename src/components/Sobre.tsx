@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { NOVIOS } from "@/lib/boda";
+import { reproducirMusica } from "./Musica";
 import { Esquinas } from "./Ornamentos";
 
 /**
@@ -23,6 +24,7 @@ export function Sobre({ para }: { para?: string }) {
 
   function abrir() {
     if (estado !== "cerrado") return;
+    reproducirMusica();
     setEstado("abriendo");
     setTimeout(() => {
       setEstado("abierto");

@@ -27,6 +27,7 @@ import vestimenta from "../../public/ilustraciones/linea/vestimenta.png";
 import { Copiar } from "./Copiar";
 import { CuentaRegresiva } from "./CuentaRegresiva";
 import { Galeria } from "./Galeria";
+import { BotonMusica } from "./Musica";
 import { Esquinas } from "./Ornamentos";
 import { Revelar } from "./Revelar";
 import { Rsvp } from "./Rsvp";
@@ -119,6 +120,7 @@ export function Invitacion({ familia }: { familia?: Familia }) {
   return (
     <main className="overflow-x-clip">
       <Sobre para={familia?.nombre} />
+      <BotonMusica />
 
       {/* Portada */}
       <header className="relative h-[100svh] min-h-[560px] w-full">
