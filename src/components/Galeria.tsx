@@ -19,7 +19,7 @@ const FOTOS: { src: string; horizontal: boolean; cel: Pos; pc: Pos; cinta?: numb
   { src: "/fotos/01.jpg", horizontal: false, cel: [1, 0, 56, -5], pc: [3, 5, 20, -6], cinta: -8 },
   { src: "/fotos/08.jpg", horizontal: true, cel: [44, 20, 54, 6], pc: [21, 21, 26, 4] },
   { src: "/fotos/02.jpg", horizontal: false, cel: [0, 138, 52, 4], pc: [58, 13, 19, 5], cinta: 6 },
-  { src: "/fotos/09.jpg", horizontal: true, cel: [46, 162, 52, -6], pc: [76, 19, 22, -5] },
+  { src: "/fotos/05.jpg", horizontal: true, cel: [46, 162, 52, -6], pc: [76, 19, 22, -5] },
   { src: "/fotos/10.jpg", horizontal: false, cel: [22, 212, 56, 3], pc: [42, 31, 16, -3], cinta: 10 },
 ];
 
