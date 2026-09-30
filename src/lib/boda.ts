@@ -75,6 +75,12 @@ export const MESA_REGALOS = {
   url: "https://mesaderegalos.liverpool.com.mx/milistaderegalos/52024839",
 };
 
+export const TRANSFERENCIA = {
+  banco: "BBVA",
+  cuenta: "012180015579437272",
+  titular: "Tania Alba",
+};
+
 export const HOSPEDAJE = [
   {
     zona: "Cerca del Templo Expiatorio",

@@ -11,6 +11,7 @@ import {
   GALERIA,
   HOSPEDAJE,
   MESA_REGALOS,
+  TRANSFERENCIA,
   NOVIOS,
   PADRES,
   PADRINOS_VELACION,
@@ -23,6 +24,7 @@ import copas from "../../public/ilustraciones/linea/copas.png";
 import pareja from "../../public/ilustraciones/linea/pareja.png";
 import regalo from "../../public/ilustraciones/linea/regalo.png";
 import vestimenta from "../../public/ilustraciones/linea/vestimenta.png";
+import { Copiar } from "./Copiar";
 import { CuentaRegresiva } from "./CuentaRegresiva";
 import { Galeria } from "./Galeria";
 import { Esquinas } from "./Ornamentos";
@@ -273,6 +275,17 @@ export function Invitacion({ familia }: { familia?: Familia }) {
           <p className="mt-2 etiqueta text-tinta/70">Evento #{MESA_REGALOS.evento}</p>
           <div className="mt-8">
             <Boton href={MESA_REGALOS.url}>Ver mesa de regalos</Boton>
+          </div>
+        </Revelar>
+        <Revelar className="tarjeta mx-auto mt-8 max-w-sm px-8 py-12">
+          <p className="font-serif text-3xl tracking-[0.2em] uppercase text-vino">Transferencia</p>
+          <p className="mt-2 etiqueta text-tinta/70">{TRANSFERENCIA.banco}</p>
+          <p className="mt-6 font-serif text-2xl tracking-wider text-tinta select-all">
+            {TRANSFERENCIA.cuenta.replace(/^(\d{3})(\d{3})(\d{11})(\d)$/, "$1 $2 $3 $4")}
+          </p>
+          <p className="mt-2 text-lg text-tinta/80">{TRANSFERENCIA.titular}</p>
+          <div className="mt-8">
+            <Copiar texto={TRANSFERENCIA.cuenta}>Copiar cuenta</Copiar>
           </div>
         </Revelar>
       </Seccion>
