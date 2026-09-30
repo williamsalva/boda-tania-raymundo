@@ -313,8 +313,7 @@ export function Invitacion({ familia }: { familia?: Familia }) {
       <section id="confirmar" className="rayas px-4 py-20 sm:py-28">
         <Revelar className="tarjeta overflow-hidden mx-auto max-w-2xl px-6 py-16 sm:px-12 text-center">
           <Esquinas cuales={["sup-izq", "sup-der"]} tam="w-28 sm:w-40" />
-          <p className="relative etiqueta text-rosa mb-3 mt-24 sm:mt-20">R. S. V. P.</p>
-          <h2 className="titulo-seccion">Confirma tu asistencia</h2>
+          <h2 className="relative titulo-seccion mt-28 sm:mt-24">Confirma tu asistencia</h2>
           {familia ? (
             <div className="relative z-10">
               <p className="mt-10 font-serif italic text-2xl text-tinta">{familia.nombre}</p>
