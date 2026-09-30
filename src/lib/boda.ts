@@ -34,8 +34,10 @@ export const EVENTOS = [
 
 export const CODIGO_VESTIMENTA = {
   titulo: "Código de vestimenta",
-  tipo: "Riguroso Formal",
-  nota: "(No Guayaberas)",
+  tipo: "Formal",
+  texto: "Agradecemos evitar los colores blanco, beige, rojo y rosa.",
+  pinterest:
+    "https://mx.pinterest.com/albatania65/inspo-de-invitados-tania-ray/?invite_code=8e61990a1eab4be6814937d244692d54&sender=809170395457524810",
   ilustracion: "/ilustraciones/codigo_vestimenta.jpg",
 };
 

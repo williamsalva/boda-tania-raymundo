@@ -218,11 +218,12 @@ export function Invitacion({ familia }: { familia?: Familia }) {
           <p className="font-serif text-3xl tracking-[0.18em] uppercase text-vino">
             {CODIGO_VESTIMENTA.tipo}
           </p>
-          <p className="mt-2 etiqueta text-rosa">{CODIGO_VESTIMENTA.nota}</p>
           <p className="mt-6 text-lg italic leading-relaxed text-tinta/80 text-balance">
-            Agradecemos acompañarnos de rigurosa etiqueta y reservar el color blanco exclusivamente
-            para la novia.
+            {CODIGO_VESTIMENTA.texto}
           </p>
+          <div className="mt-8">
+            <Boton href={CODIGO_VESTIMENTA.pinterest}>Ideas en Pinterest</Boton>
+          </div>
         </Revelar>
       </Seccion>
 
