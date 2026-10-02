@@ -64,7 +64,7 @@ export const VERSICULO = {
 
 export const PADRES = {
   novia: ["Ramiro Alba Aguilar", "Lorena García Betancourt"],
-  novio: ["Carlos García Mares", "† Marina García León"],
+  novio: ["Carlos García Mares", "† Marina León García"],
 };
 
 export const PADRINOS_VELACION = ["Julio César Rodríguez Ortega", "Ahtziri Janeth Alba García"];
