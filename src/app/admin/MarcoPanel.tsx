@@ -1,4 +1,4 @@
-import { Armchair, CalendarHeart, Download, ExternalLink, LogOut, Users } from "lucide-react";
+import { Armchair, CalendarHeart, Download, ExternalLink, LogOut, ScanLine, Users } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { modoDemoAdmin } from "@/lib/admin";
@@ -59,6 +59,9 @@ export function MarcoPanel({ activo, email, children }: { activo: Seccion; email
           <a href="/" target="_blank" className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900">
             <ExternalLink className="size-4" /> Ver invitación
           </a>
+          <a href="/entrada" target="_blank" className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900">
+            <ScanLine className="size-4" /> App de entrada
+          </a>
           <a href="/admin/exportar" download className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900">
             <Download className="size-4" /> Exportar a Excel
           </a>
@@ -89,6 +92,9 @@ export function MarcoPanel({ activo, email, children }: { activo: Seccion; email
             <Logo className="size-8" />
             <p className="flex-1 font-semibold">Tania & Raymundo</p>
             <span className="num rounded-full bg-zinc-100 px-2.5 py-1 text-xs text-zinc-600">{diasBoda} días</span>
+            <a href="/entrada" target="_blank" title="App de entrada" className="grid size-8 place-items-center rounded-lg text-zinc-500 hover:bg-zinc-100">
+              <ScanLine className="size-4" />
+            </a>
             <a href="/admin/exportar" download title="Exportar a Excel" className="grid size-8 place-items-center rounded-lg text-zinc-500 hover:bg-zinc-100">
               <Download className="size-4" />
             </a>

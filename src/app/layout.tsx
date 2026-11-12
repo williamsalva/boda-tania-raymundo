@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Montserrat, Pinyon_Script } from "next/font/google";
+import { SITIO } from "@/lib/sitio";
 import "./globals.css";
 
 const serif = Cormorant_Garamond({
@@ -21,14 +22,8 @@ const sans = Montserrat({
   weight: ["300", "400", "500"],
 });
 
-const sitio =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "http://localhost:3000");
-
 export const metadata: Metadata = {
-  metadataBase: new URL(sitio),
+  metadataBase: new URL(SITIO),
   title: "Tania & Raymundo · 11.12.2026",
   description: "Con la bendición de Dios y de nuestros padres, te invitamos a celebrar nuestra boda.",
   openGraph: {

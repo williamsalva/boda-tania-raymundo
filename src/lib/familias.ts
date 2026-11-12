@@ -18,6 +18,11 @@ export type Familia = {
   mensaje: string | null;
   telefono: string | null;
   confirmado_at: string | null;
+  /** Código secreto del pase de entrada; es lo que va dentro del QR. */
+  codigo: string;
+  /** Quiénes ya llegaron al salón (subconjunto de `invitados`). */
+  llegaron: string[];
+  llegada_at: string | null;
   created_at: string;
 };
 
@@ -83,6 +88,9 @@ function crearDemo() {
       mensaje: asistentes?.length ? "¡Ahí estaremos, muchas felicidades!" : null,
       telefono,
       confirmado_at: asistentes === null ? null : new Date(Date.now() - i * 86_400_000).toISOString(),
+      codigo: crypto.randomUUID(),
+      llegaron: [],
+      llegada_at: null,
       created_at: new Date(Date.now() - (10 - i) * 86_400_000).toISOString(),
     },
   ]),
@@ -147,6 +155,9 @@ export async function crearFamilia(datos: DatosFamilia) {
       asistentes: null,
       mensaje: null,
       confirmado_at: null,
+      codigo: crypto.randomUUID(),
+      llegaron: [],
+      llegada_at: null,
       created_at: new Date().toISOString(),
     });
     return;
@@ -166,8 +177,9 @@ export async function actualizarFamilia(id: string, datos: DatosFamilia) {
     }
     // Si quitan a alguien de la lista, también sale de los confirmados.
     const asistentes = actual.asistentes?.filter((n) => datos.invitados.includes(n)) ?? null;
+    const llegaron = actual.llegaron.filter((n) => datos.invitados.includes(n));
     demo.delete(actual.slug);
-    demo.set(datos.slug, { ...actual, ...datos, id: datos.slug, asistentes, ...estadoDe(asistentes) });
+    demo.set(datos.slug, { ...actual, ...datos, id: datos.slug, asistentes, llegaron, ...estadoDe(asistentes) });
     // En demo el id es el slug: los asientos siguen a la familia y se quitan los de invitados borrados.
     global.__asientosDemo = global.__asientosDemo
       ?.map((a) => (a.familia_id === id ? { ...a, familia_id: datos.slug } : a))
@@ -177,7 +189,7 @@ export async function actualizarFamilia(id: string, datos: DatosFamilia) {
 
   const { data: actual, error: e1 } = await db
     .from("familias")
-    .select("asistentes")
+    .select("asistentes, llegaron")
     .eq("id", id)
     .maybeSingle();
   if (e1) throw error("leer la familia", e1);
@@ -185,9 +197,11 @@ export async function actualizarFamilia(id: string, datos: DatosFamilia) {
 
   const asistentes =
     (actual.asistentes as string[] | null)?.filter((n) => datos.invitados.includes(n)) ?? null;
+  // `llegaron` debe seguir siendo subconjunto de `invitados` (lo exige la base).
+  const llegaron = ((actual.llegaron as string[] | null) ?? []).filter((n) => datos.invitados.includes(n));
   const { error: e2 } = await db
     .from("familias")
-    .update({ ...datos, asistentes, ...estadoDe(asistentes) })
+    .update({ ...datos, asistentes, llegaron, ...estadoDe(asistentes) })
     .eq("id", id);
   if (e2) throw error("actualizar la familia", e2);
 
@@ -211,6 +225,50 @@ export async function eliminarFamilia(id: string) {
 
   const { error: e } = await db.from("familias").delete().eq("id", id);
   if (e) throw error("eliminar la familia", e);
+}
+
+// ——— Pases de entrada (QR) ———
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+export async function obtenerFamiliaPorId(id: string): Promise<Familia | null> {
+  const db = supabase();
+  if (!db) return [...demo.values()].find((f) => f.id === id) ?? null;
+  if (!UUID.test(id)) return null;
+
+  const { data, error: e } = await db.from("familias").select("*").eq("id", id).maybeSingle();
+  if (e) throw error("leer la familia", e);
+  return data as Familia | null;
+}
+
+export async function obtenerFamiliaPorCodigo(codigo: string): Promise<Familia | null> {
+  if (!UUID.test(codigo)) return null;
+  const db = supabase();
+  if (!db) return [...demo.values()].find((f) => f.codigo === codigo.toLowerCase()) ?? null;
+
+  const { data, error: e } = await db.from("familias").select("*").eq("codigo", codigo).maybeSingle();
+  if (e) throw error("leer el pase", e);
+  return data as Familia | null;
+}
+
+/** Guarda quiénes de la familia ya llegaron (reemplaza la lista). */
+export async function registrarLlegada(id: string, nombres: string[]) {
+  const familia = await obtenerFamiliaPorId(id);
+  if (!familia) throw new Error("La familia ya no existe.");
+  const llegaron = familia.invitados.filter((n) => nombres.includes(n));
+  const cambios = {
+    llegaron,
+    // Conservamos la hora de la primera llegada; si se desmarca a todos, se limpia.
+    llegada_at: llegaron.length ? (familia.llegada_at ?? new Date().toISOString()) : null,
+  };
+
+  const db = supabase();
+  if (!db) {
+    demo.set(familia.slug, { ...familia, ...cambios });
+    return;
+  }
+  const { error: e } = await db.from("familias").update(cambios).eq("id", id);
+  if (e) throw error("registrar la llegada", e);
 }
 
 /**

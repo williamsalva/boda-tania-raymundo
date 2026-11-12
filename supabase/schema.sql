@@ -13,6 +13,11 @@ create table if not exists public.familias (
   mensaje text,
   telefono text,
   confirmado_at timestamptz,
+  -- Código secreto del pase de entrada (va dentro del QR).
+  codigo uuid not null unique default gen_random_uuid(),
+  -- Quiénes ya llegaron al salón; subconjunto de `invitados`.
+  llegaron text[] not null default '{}' check (llegaron <@ invitados),
+  llegada_at timestamptz,
   created_at timestamptz not null default now()
 );
 
@@ -68,6 +73,12 @@ create index if not exists asientos_mesa_idx on public.asientos (mesa_id);
 
 alter table public.mesas enable row level security;
 alter table public.asientos enable row level security;
+
+-- ——— Pases con QR y registro de llegada (migración nov-2026) ———
+-- Para una base creada antes: estas líneas agregan las columnas sin tocar los datos.
+alter table public.familias add column if not exists codigo uuid not null unique default gen_random_uuid();
+alter table public.familias add column if not exists llegaron text[] not null default '{}' check (llegaron <@ invitados);
+alter table public.familias add column if not exists llegada_at timestamptz;
 
 -- Ejemplo de alta (el slug es lo que va en la URL: tudominio.com/familia-alba-garcia)
 insert into public.familias (slug, nombre, invitados) values

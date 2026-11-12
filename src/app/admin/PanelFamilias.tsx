@@ -10,14 +10,16 @@ import {
   Pencil,
   Phone,
   Plus,
+  QrCode,
   Search,
   Trash2,
   UserX,
 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState, useTransition } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import type { Familia } from "@/lib/familias";
 import { borrarFamilia } from "./acciones";
 import { FormFamilia } from "./FormFamilia";
+import { PaseQr } from "./PaseQr";
 
 type Filtro = "todas" | Familia["asistencia"];
 type Orden = "nombre" | "recientes" | "invitados";
@@ -287,6 +289,7 @@ export function PanelFamilias({ familias }: { familias: Familia[] }) {
   // null = cerrado, "nueva" = alta, o el id de la familia en edición
   const [editando, setEditando] = useState<string | null>(null);
   const [porEliminar, setPorEliminar] = useState<Familia | null>(null);
+  const [conPase, setConPase] = useState<string | null>(null);
   const [eliminando, iniciarEliminar] = useTransition();
   const [aviso, setAviso] = useState<string | null>(null);
 
@@ -317,6 +320,7 @@ export function PanelFamilias({ familias }: { familias: Familia[] }) {
   }, [familias, busqueda, filtro, orden]);
 
   const enEdicion = familias.find((f) => f.id === editando);
+  const paseAbierto = familias.find((f) => f.id === conPase);
 
   function copiar(f: Familia) {
     navigator.clipboard.writeText(enlace(f.slug));
@@ -328,6 +332,8 @@ export function PanelFamilias({ familias }: { familias: Familia[] }) {
     const mensaje = `¡Hola, ${f.nombre}! Con mucho cariño les compartimos la invitación a nuestra boda. Ahí pueden confirmar su asistencia: ${enlace(f.slug)}\n\nTania & Raymundo`;
     window.open(`https://wa.me/${numeroWhatsApp(f.telefono)}?text=${encodeURIComponent(mensaje)}`, "_blank", "noopener");
   }
+
+  const cerrarPase = useCallback(() => setConPase(null), []);
 
   function eliminar() {
     if (!porEliminar) return;
@@ -352,6 +358,13 @@ export function PanelFamilias({ familias }: { familias: Familia[] }) {
         disabled={!f.telefono}
       >
         <MessageCircle className="size-4" />
+      </BotonIcono>
+      <BotonIcono
+        titulo={f.asistencia === "no" ? "No asistirán: no necesitan pase" : "Pase de entrada con QR"}
+        onClick={() => setConPase(f.id)}
+        disabled={f.asistencia === "no"}
+      >
+        <QrCode className="size-4" />
       </BotonIcono>
       <Menu
         opciones={[
@@ -439,7 +452,7 @@ export function PanelFamilias({ familias }: { familias: Familia[] }) {
                   <th className="px-3 font-medium">Estado</th>
                   <th className="px-3 font-medium">Teléfono</th>
                   <th className="px-3 font-medium">Respondió</th>
-                  <th className="w-32 pr-3" />
+                  <th className="w-40 pr-3" />
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-100">
@@ -511,6 +524,14 @@ export function PanelFamilias({ familias }: { familias: Familia[] }) {
           familia={enEdicion}
           onCerrar={() => setEditando(null)}
           onGuardado={(nombre) => setAviso(enEdicion ? `Cambios guardados en ${nombre}` : `${nombre} agregada`)}
+        />
+      )}
+
+      {paseAbierto && (
+        <PaseQr
+          familia={paseAbierto}
+          whatsapp={paseAbierto.telefono ? numeroWhatsApp(paseAbierto.telefono) : null}
+          onCerrar={cerrarPase}
         />
       )}
 

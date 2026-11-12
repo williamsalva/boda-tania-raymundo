@@ -1,5 +1,5 @@
 /** Rutas propias de la app que no pueden usarse como enlace de familia. */
-export const SLUGS_RESERVADOS = new Set(["admin", "api", "_next", "favicon-ico"]);
+export const SLUGS_RESERVADOS = new Set(["admin", "api", "entrada", "_next", "favicon-ico"]);
 
 /** "Familia Alba García" / "familia%20alba" / "FAMILIA-ALBA" → "familia-alba-garcia" */
 export function normalizarSlug(valor: string) {
