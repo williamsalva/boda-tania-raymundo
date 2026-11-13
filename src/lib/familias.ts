@@ -1,5 +1,6 @@
 import "server-only";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { esperadosDe } from "./pases";
 import { normalizarSlug } from "./slug";
 
 export { normalizarSlug, SLUGS_RESERVADOS } from "./slug";
@@ -252,10 +253,32 @@ export async function obtenerFamiliaPorCodigo(codigo: string): Promise<Familia |
 }
 
 /** Guarda quiénes de la familia ya llegaron (reemplaza la lista). */
-export async function registrarLlegada(id: string, nombres: string[]) {
+export type CambioLlegada = { agregar?: string[]; quitar?: string[] };
+
+/**
+ * Suma (o quita) llegadas sobre lo que ya está guardado, en lugar de reemplazar la lista:
+ * así dos teléfonos registrando a la misma familia no se borran entre sí.
+ * El pase vale para tantas personas como se esperan (confirmadas); se puede usar en varias
+ * entradas hasta llenar ese cupo, y no más.
+ */
+export async function registrarLlegada(id: string, { agregar = [], quitar = [] }: CambioLlegada) {
   const familia = await obtenerFamiliaPorId(id);
   if (!familia) throw new Error("La familia ya no existe.");
-  const llegaron = familia.invitados.filter((n) => nombres.includes(n));
+
+  const dentro = new Set(familia.llegaron);
+  for (const n of agregar) dentro.add(n);
+  for (const n of quitar) dentro.delete(n);
+  const llegaron = familia.invitados.filter((n) => dentro.has(n));
+
+  const cupo = esperadosDe(familia).length;
+  if (llegaron.length > cupo && llegaron.length > familia.llegaron.length) {
+    throw new Error(
+      cupo === 0
+        ? "Este pase no tiene lugares: la familia no confirmó asistencia."
+        : `El pase es para ${cupo} ${cupo === 1 ? "persona" : "personas"} y ya ${familia.llegaron.length === 1 ? "entró 1" : `entraron ${familia.llegaron.length}`}.`,
+    );
+  }
+
   const cambios = {
     llegaron,
     // Conservamos la hora de la primera llegada; si se desmarca a todos, se limpia.
@@ -265,10 +288,11 @@ export async function registrarLlegada(id: string, nombres: string[]) {
   const db = supabase();
   if (!db) {
     demo.set(familia.slug, { ...familia, ...cambios });
-    return;
+    return cambios;
   }
   const { error: e } = await db.from("familias").update(cambios).eq("id", id);
   if (e) throw error("registrar la llegada", e);
+  return cambios;
 }
 
 /**

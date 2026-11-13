@@ -18,41 +18,51 @@ export type Pase = {
 
 export type Tono = "ok" | "aviso" | "alto";
 
-export const faltanDe = (p: Pase) => p.esperados.filter((n) => !p.llegaron.includes(n));
+/** El pase vale para tantas personas como se esperan; se puede usar en varias entradas hasta llenarlo. */
+export const cupoDe = (p: Pase) => p.esperados.length;
+export const quedanDe = (p: Pase) => Math.max(0, cupoDe(p) - p.llegaron.length);
+/** Esperados que aún no entran, limitados a los lugares que quedan en el pase. */
+export const faltanDe = (p: Pase) => p.esperados.filter((n) => !p.llegaron.includes(n)).slice(0, quedanDe(p));
 
 export const hora = (fecha: string) =>
   new Date(fecha).toLocaleTimeString("es-MX", { hour: "numeric", minute: "2-digit", timeZone: "America/Mexico_City" });
 
 export const personas = (n: number) => `${n} ${n === 1 ? "persona" : "personas"}`;
+export const lugares = (n: number) => `${n} ${n === 1 ? "lugar" : "lugares"}`;
 
 /** Lo primero que ve la planner al escanear: ¿pasa o no pasa? */
 export function evaluar(p: Pase): { tono: Tono; titulo: string; detalle: string } {
-  const faltan = faltanDe(p);
-  if (p.asistencia === "no") {
-    return { tono: "alto", titulo: "Dijeron que no asistirían", detalle: "Consulta con los novios antes de darles acceso." };
+  const cupo = cupoDe(p);
+  const quedan = quedanDe(p);
+  if (cupo === 0) {
+    return {
+      tono: "alto",
+      titulo: "Pase sin lugares",
+      detalle: "Respondieron que no asistirían. Para dejarlos pasar, los novios deben cambiar su confirmación.",
+    };
   }
-  if (p.llegaron.length && !faltan.length) {
+  if (quedan === 0) {
     return {
       tono: "alto",
       titulo: "Pase ya usado",
-      detalle: `Ya entraron ${personas(p.llegaron.length)}${p.llegadaAt ? ` · ${hora(p.llegadaAt)}` : ""}`,
+      detalle: `No quedan lugares: entraron ${p.llegaron.length} de ${cupo}${p.llegadaAt ? ` (desde las ${hora(p.llegadaAt)})` : ""}`,
     };
   }
-  if (p.asistencia === "pendiente") {
+  if (p.asistencia === "pendiente" && !p.llegaron.length) {
     return {
       tono: "aviso",
       titulo: "Sin confirmar",
-      detalle: "No respondieron la invitación. Consulta con los novios antes de darles acceso.",
+      detalle: `No respondieron la invitación (${personas(cupo)}). Consulta con los novios antes de darles acceso.`,
     };
   }
   if (p.llegaron.length) {
     return {
       tono: "aviso",
-      titulo: `Ya entraron ${p.llegaron.length} de ${p.esperados.length}`,
-      detalle: `Faltan: ${faltan.join(", ")}.`,
+      titulo: `Ya entraron ${p.llegaron.length} de ${cupo}`,
+      detalle: `${quedan === 1 ? "Queda" : "Quedan"} ${lugares(quedan)} en este pase.${p.asistencia === "pendiente" ? " Familia sin confirmar." : ""}`,
     };
   }
-  return { tono: "ok", titulo: "Pase válido", detalle: `${personas(p.esperados.length)} confirmadas.` };
+  return { tono: "ok", titulo: "Pase válido", detalle: `Para ${personas(cupo)}.` };
 }
 
 /** Agrupa nombres por mesa, en orden de mesa y con los que no tienen mesa al final. */

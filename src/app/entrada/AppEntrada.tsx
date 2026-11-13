@@ -8,9 +8,10 @@ import { Escaner } from "./Escaner";
 import { Ficha, Hoja, PaseNoValido } from "./Ficha";
 import { ListaInvitados } from "./ListaInvitados";
 import { prepararSonido, senal } from "./senal";
-import { evaluar, faltanDe, hora, personas, type Pase } from "./tipos";
+import { evaluar, faltanDe, hora, lugares, type Pase } from "./tipos";
 
 type Vista = "escanear" | "invitados";
+type Cambio = { agregar?: string[]; quitar?: string[] };
 type Toast = { id: number; tono: "ok" | "error"; texto: string; accion?: { etiqueta: string; fn: () => void } };
 
 /** Cada cuánto traer llegadas registradas desde otros teléfonos. */
@@ -86,56 +87,77 @@ export function AppEntrada({
     setVista("invitados");
   }
 
-  function aplicar(id: string, llegaron: string[], llegadaAt: string | null) {
-    setPases((ps) => ps.map((p) => (p.id === id ? { ...p, llegaron, llegadaAt } : p)));
-  }
-
-  async function registrar(p: Pase, nombres: string[]) {
-    const antes = { llegaron: p.llegaron, llegadaAt: p.llegadaAt };
-    const llegaron = p.invitados.filter((n) => nombres.includes(n));
-    const nuevos = llegaron.filter((n) => !antes.llegaron.includes(n)).length;
-
-    // Optimista: cerramos y la cámara queda lista para el siguiente pase mientras se guarda.
-    aplicar(p.id, llegaron, llegaron.length ? (p.llegadaAt ?? new Date().toISOString()) : null);
-    cerrar();
-    if (nuevos) navigator.vibrate?.(40);
-
-    const r = await guardarLlegada(p.id, llegaron);
-    if (!r?.ok) {
-      aplicar(p.id, antes.llegaron, antes.llegadaAt);
-      senal("alto");
-      setToast({
-        id: Date.now(),
-        tono: "error",
-        texto: `No se guardó ${p.nombre}. Revisa la señal.`,
-        accion: { etiqueta: "Reintentar", fn: () => registrar(p, nombres) },
-      });
-      return;
-    }
-    setToast({
-      id: Date.now(),
-      tono: "ok",
-      texto: nuevos
-        ? `${p.nombre} · ${nuevos === 1 ? "1 llegada" : `${nuevos} llegadas`}`
-        : `${p.nombre} · ${llegaron.length ? `${personas(llegaron.length)} dentro` : "sin llegadas"}`,
-      accion: { etiqueta: "Deshacer", fn: () => deshacer(p, antes) },
-    });
-  }
-
-  async function deshacer(p: Pase, antes: { llegaron: string[]; llegadaAt: string | null }) {
-    setToast(null);
-    aplicar(p.id, antes.llegaron, antes.llegadaAt);
-    const r = await guardarLlegada(p.id, antes.llegaron);
-    setToast(
-      r?.ok
-        ? { id: Date.now(), tono: "ok", texto: `Se deshizo el registro de ${p.nombre}` }
-        : { id: Date.now(), tono: "error", texto: "No se pudo deshacer. Corrígelo desde la ficha." },
+  /** Aplica un cambio sobre lo que hay en pantalla (optimista). */
+  function aplicar(id: string, { agregar = [], quitar = [] }: Cambio) {
+    setPases((ps) =>
+      ps.map((p) => {
+        if (p.id !== id) return p;
+        const dentro = new Set(p.llegaron);
+        agregar.forEach((n) => dentro.add(n));
+        quitar.forEach((n) => dentro.delete(n));
+        const llegaron = p.invitados.filter((n) => dentro.has(n));
+        return { ...p, llegaron, llegadaAt: llegaron.length ? (p.llegadaAt ?? new Date().toISOString()) : null };
+      }),
     );
   }
 
+  function fijar(id: string, llegaron: string[], llegadaAt: string | null) {
+    setPases((ps) => ps.map((p) => (p.id === id ? { ...p, llegaron, llegadaAt } : p)));
+  }
+
+  /**
+   * Guarda un cambio de llegadas: cierra la hoja al instante (la cámara queda lista para el siguiente)
+   * y el servidor lo suma a lo que ya estaba, sin pasar del cupo del pase.
+   */
+  async function guardar(p: Pase, cambio: Cambio, deshaciendo = false) {
+    const agregar = (cambio.agregar ?? []).filter((n) => !p.llegaron.includes(n));
+    const quitar = (cambio.quitar ?? []).filter((n) => p.llegaron.includes(n));
+    if (!agregar.length && !quitar.length) return cerrar();
+
+    aplicar(p.id, { agregar, quitar });
+    cerrar();
+    if (agregar.length) navigator.vibrate?.(40);
+
+    const r = await guardarLlegada(p.id, { agregar, quitar });
+    if (!r.ok) {
+      aplicar(p.id, { agregar: quitar, quitar: agregar });
+      senal("alto");
+      const sinLugar = /pase/i.test(r.error);
+      setToast({
+        id: Date.now(),
+        tono: "error",
+        texto: sinLugar ? `${p.nombre}: ${r.error}` : `No se guardó ${p.nombre}. Revisa la señal.`,
+        accion: sinLugar ? undefined : { etiqueta: "Reintentar", fn: () => guardar(p, cambio, deshaciendo) },
+      });
+      return;
+    }
+    fijar(p.id, r.llegaron, r.llegadaAt);
+
+    const quedan = Math.max(0, p.esperados.length - r.llegaron.length);
+    const texto = deshaciendo
+      ? `Se deshizo el registro de ${p.nombre}`
+      : agregar.length && !quitar.length
+        ? `${p.nombre} · ${agregar.length === 1 ? "entró 1" : `entraron ${agregar.length}`} · ${quedan ? `${quedan === 1 ? "queda" : "quedan"} ${lugares(quedan)}` : "pase completo"}`
+        : `${p.nombre} · corregido: ${r.llegaron.length} de ${p.esperados.length} dentro`;
+    const actualizado = { ...p, llegaron: r.llegaron, llegadaAt: r.llegadaAt };
+    setToast({
+      id: Date.now(),
+      tono: "ok",
+      texto,
+      accion: deshaciendo ? undefined : { etiqueta: "Deshacer", fn: () => guardar(actualizado, { agregar: quitar, quitar: agregar }, true) },
+    });
+  }
+
+  const registrar = (p: Pase, nombres: string[]) => guardar(p, { agregar: nombres });
+  const corregir = (p: Pase, nombres: string[]) =>
+    guardar(p, { agregar: nombres, quitar: p.llegaron.filter((n) => !nombres.includes(n)) });
+
   // Resumen de la noche
   const confirmadas = pases.filter((p) => p.asistencia === "si");
-  const esperados = confirmadas.reduce((s, p) => s + p.esperados.length, 0);
+  // Confirmados, más el cupo de familias sin confirmar a las que sí se dejó pasar.
+  const esperados = pases
+    .filter((p) => p.asistencia === "si" || p.llegaron.length > 0)
+    .reduce((s, p) => s + Math.max(p.esperados.length, p.llegaron.length), 0);
   const llegaron = pases.reduce((s, p) => s + p.llegaron.length, 0);
   const porLlegar = confirmadas.filter((p) => faltanDe(p).length > 0).length;
   const avance = esperados ? Math.min(100, Math.round((llegaron / esperados) * 100)) : 0;
@@ -253,7 +275,7 @@ export function AppEntrada({
       {abierto && (
         <Hoja onCerrar={cerrar}>
           {pase ? (
-            <Ficha key={pase.id} pase={pase} onRegistrar={(n) => registrar(pase, n)} onCerrar={cerrar} />
+            <Ficha key={pase.id} pase={pase} onRegistrar={(n) => registrar(pase, n)} onCorregir={(n) => corregir(pase, n)} onCerrar={cerrar} />
           ) : (
             <PaseNoValido onBuscar={irABuscar} onCerrar={cerrar} />
           )}

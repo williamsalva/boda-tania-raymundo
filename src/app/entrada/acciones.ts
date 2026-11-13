@@ -8,7 +8,7 @@ import {
   exigirEntrada,
   pinCorrecto,
 } from "@/lib/entrada";
-import { registrarLlegada } from "@/lib/familias";
+import { registrarLlegada, type CambioLlegada } from "@/lib/familias";
 
 export type Resultado = { ok: boolean; error?: string } | null;
 
@@ -27,18 +27,21 @@ export async function entrarConPin(_prev: Resultado, formData: FormData): Promis
   redirect(destino(formData.get("volver")));
 }
 
-export async function guardarLlegada(id: string, llegaron: string[]): Promise<Resultado> {
+export type ResultadoLlegada =
+  | { ok: true; llegaron: string[]; llegadaAt: string | null }
+  | { ok: false; error: string };
+
+const nombres = (l: string[] | undefined) => (l ?? []).slice(0, 50).map((n) => String(n).slice(0, 80));
+
+export async function guardarLlegada(id: string, cambio: CambioLlegada): Promise<ResultadoLlegada> {
   await exigirEntrada();
   try {
-    await registrarLlegada(
-      id.slice(0, 100),
-      llegaron.slice(0, 50).map((n) => String(n).slice(0, 80)),
-    );
+    const r = await registrarLlegada(id.slice(0, 100), { agregar: nombres(cambio.agregar), quitar: nombres(cambio.quitar) });
+    revalidatePath("/entrada", "layout");
+    return { ok: true, llegaron: r.llegaron, llegadaAt: r.llegada_at };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : "No se pudo guardar." };
   }
-  revalidatePath("/entrada", "layout");
-  return { ok: true };
 }
 
 export async function salirEntrada() {
