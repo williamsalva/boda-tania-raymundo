@@ -9,12 +9,14 @@ import { obtenerFamiliaPorId } from "@/lib/familias";
 import { esperadosDe } from "@/lib/pases";
 import { urlPase } from "@/lib/sitio";
 
-// Tarjeta "pase de entrada" en PNG para mandar por WhatsApp. Tamaño vertical 4:5.
+// Tarjeta "pase de entrada" en PNG para mandar por WhatsApp. Tamaño vertical 4:5,
+// con las mismas flores de acuarela y rayas rosas de la invitación.
 const ANCHO = 1080;
 const ALTO = 1350;
 
 const C = {
-  rubor: "#fbf3f6",
+  raya: "#f3e4ec",
+  fondo: "#fdf8fa",
   perla: "#fffafc",
   rosa: "#c94a91",
   fucsia: "#c40a78",
@@ -28,13 +30,28 @@ const recursos = Promise.all([
   readFile(join(process.cwd(), "src/app/admin/qr/fuentes/CormorantGaramond-Medium.ttf")),
   readFile(join(process.cwd(), "src/app/admin/qr/fuentes/CormorantGaramond-Italic.ttf")),
   readFile(join(process.cwd(), "src/app/admin/qr/fuentes/Montserrat-Medium.ttf")),
-  readFile(join(process.cwd(), "public/ilustraciones/ramillete_floral.svg")),
-  readFile(join(process.cwd(), "public/ilustraciones/divisor_floral.svg")),
+  readFile(join(process.cwd(), "public/flores/esquina-sup-izq.png")),
+  readFile(join(process.cwd(), "public/flores/esquina-sup-der.png")),
+  readFile(join(process.cwd(), "public/flores/esquina-inf-izq.png")),
+  readFile(join(process.cwd(), "public/flores/esquina-inf-der.png")),
+  readFile(join(process.cwd(), "public/flores/flor.png")),
 ]);
 
-const dataSvg = (b: Buffer) => `data:image/svg+xml;base64,${b.toString("base64")}`;
+const dataPng = (b: Buffer) => `data:image/png;base64,${b.toString("base64")}`;
 
 const recepcion = EVENTOS.find((e) => e.titulo === "Recepción");
+
+/** Línea fina con una florecita de acuarela al centro. */
+function Separador({ flor, ancho = 420 }: { flor: string; ancho?: number }) {
+  const linea = { display: "flex", width: (ancho - 70) / 2, height: 1.5, background: `${C.rosa}55` };
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+      <div style={linea} />
+      <img alt="" src={flor} width={42} height={35} />
+      <div style={linea} />
+    </div>
+  );
+}
 
 export async function GET(request: Request, ctx: RouteContext<"/admin/qr/[id]">) {
   if (!(await obtenerAdmin())) return new Response("No autorizado", { status: 401 });
@@ -43,9 +60,8 @@ export async function GET(request: Request, ctx: RouteContext<"/admin/qr/[id]">)
   const familia = await obtenerFamiliaPorId(id);
   if (!familia) return new Response("No existe esa familia", { status: 404 });
 
-  const [script, serif, serifItalica, sans, svgRamillete, svgDivisor] = await recursos;
-  const ramillete = dataSvg(svgRamillete);
-  const divisor = dataSvg(svgDivisor);
+  const [script, serif, serifItalica, sans, ...pngs] = await recursos;
+  const [supIzq, supDer, infIzq, infDer, flor] = pngs.map(dataPng);
   const qr = await QRCode.toDataURL(urlPase(familia.codigo), {
     errorCorrectionLevel: "M",
     margin: 0,
@@ -60,68 +76,98 @@ export async function GET(request: Request, ctx: RouteContext<"/admin/qr/[id]">)
 
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", background: C.rubor, padding: 44 }}>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          padding: 48,
+          backgroundColor: C.fondo,
+          backgroundImage: `repeating-linear-gradient(90deg, ${C.raya} 0px, ${C.raya} 22px, ${C.fondo} 22px, ${C.fondo} 44px)`,
+        }}
+      >
         <div
           style={{
             flex: 1,
             display: "flex",
-            padding: 12,
+            position: "relative",
             background: C.perla,
-            border: `2px solid ${C.rosa}55`,
-            borderRadius: 28,
+            border: `2px solid ${C.rosa}40`,
+            boxShadow: "0 30px 60px -30px rgba(155,37,72,0.35)",
+            overflow: "hidden",
           }}
         >
+          {/* Ramos de acuarela en las esquinas, como en la invitación */}
+          <img alt="" src={supIzq} width={300} height={428} style={{ position: "absolute", left: -6, top: -6 }} />
+          <img alt="" src={supDer} width={280} height={459} style={{ position: "absolute", right: -6, top: -6 }} />
+          <img alt="" src={infIzq} width={240} height={395} style={{ position: "absolute", left: -6, bottom: -6 }} />
+          <img alt="" src={infDer} width={270} height={365} style={{ position: "absolute", right: -6, bottom: -6 }} />
+
+          {/* Filete interior */}
+          <div
+            style={{
+              position: "absolute",
+              left: 14,
+              top: 14,
+              right: 14,
+              bottom: 14,
+              display: "flex",
+              border: `1px solid ${C.rosa}30`,
+            }}
+          />
+
           <div
             style={{
               flex: 1,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              border: `1px solid ${C.rosa}40`,
-              borderRadius: 20,
-              padding: "26px 56px 40px",
+              padding: "70px 150px 56px",
               color: C.tinta,
             }}
           >
-            <img alt="" src={ramillete} width={380} height={152} style={{ marginTop: -6 }} />
-
-            <div style={{ fontFamily: "Montserrat", fontSize: 22, letterSpacing: 9, color: C.vino, marginTop: 4 }}>
-              PASE DE ENTRADA
+            <div style={{ fontFamily: "Montserrat", fontSize: 21, letterSpacing: 10, color: C.vino }}>PASE DE ENTRADA</div>
+            <div style={{ fontFamily: "Pinyon", fontSize: 96, color: C.fucsia, lineHeight: 1.05, marginTop: 14 }}>
+              {NOVIOS.ellaCorto}
             </div>
-            <div style={{ fontFamily: "Pinyon", fontSize: 108, color: C.fucsia, lineHeight: 1.05, marginTop: 6 }}>
-              {`${NOVIOS.ellaCorto} & ${NOVIOS.elCorto}`}
+            <div style={{ fontFamily: "Cormorant", fontStyle: "italic", fontSize: 54, color: C.rosa, lineHeight: 0.9, marginTop: -2 }}>&amp;</div>
+            <div style={{ fontFamily: "Pinyon", fontSize: 96, color: C.fucsia, lineHeight: 1.05, marginTop: -4 }}>
+              {NOVIOS.elCorto}
             </div>
-            <div style={{ fontFamily: "Montserrat", fontSize: 24, letterSpacing: 8, color: C.tinta, marginTop: 22 }}>
+            <div style={{ display: "flex", marginTop: 26 }}>
+              <Separador flor={flor} ancho={380} />
+            </div>
+            <div style={{ fontFamily: "Montserrat", fontSize: 23, letterSpacing: 8, color: C.tinta, marginTop: 14 }}>
               {FECHA_TEXTO}
             </div>
 
             <div
               style={{
                 display: "flex",
-                padding: 26,
-                marginTop: 34,
+                padding: 24,
+                marginTop: 30,
                 background: "#ffffff",
-                borderRadius: 22,
-                border: `1px solid ${C.rosa}40`,
-                boxShadow: "0 18px 40px -24px rgba(155,37,72,0.45)",
+                borderRadius: 18,
+                border: `1.5px solid ${C.rosa}45`,
+                boxShadow: "0 22px 44px -24px rgba(155,37,72,0.5)",
               }}
             >
-              <img alt="" src={qr} width={440} height={440} />
+              <img alt="" src={qr} width={400} height={400} />
             </div>
 
             <div
               style={{
                 fontFamily: "Cormorant",
-                fontSize: familia.nombre.length > 28 ? 46 : 56,
+                fontSize: familia.nombre.length > 28 ? 44 : 54,
                 color: C.vino,
-                marginTop: 34,
+                marginTop: 30,
                 textAlign: "center",
                 lineHeight: 1.1,
               }}
             >
               {familia.nombre}
             </div>
-            <div style={{ fontFamily: "Montserrat", fontSize: 22, letterSpacing: 6, color: C.rosa, marginTop: 12 }}>
+            <div style={{ fontFamily: "Montserrat", fontSize: 20, letterSpacing: 6, color: C.rosa, marginTop: 12 }}>
               {pases === 1 ? "VÁLIDO PARA 1 PERSONA" : `VÁLIDO PARA ${pases} PERSONAS`}
             </div>
             {mostrarNombres && (
@@ -129,13 +175,13 @@ export async function GET(request: Request, ctx: RouteContext<"/admin/qr/[id]">)
                 style={{
                   fontFamily: "Cormorant",
                   fontStyle: "italic",
-                  fontSize: 28,
+                  fontSize: 27,
                   color: C.tinta,
                   opacity: 0.8,
-                  marginTop: 12,
+                  marginTop: 10,
                   textAlign: "center",
                   lineHeight: 1.3,
-                  maxWidth: 820,
+                  maxWidth: 680,
                 }}
               >
                 {lista.join(" · ")}
@@ -143,11 +189,10 @@ export async function GET(request: Request, ctx: RouteContext<"/admin/qr/[id]">)
             )}
 
             <div style={{ flex: 1 }} />
-            <img alt="" src={divisor} width={330} height={53} />
-            <div style={{ fontFamily: "Montserrat", fontSize: 19, letterSpacing: 4, color: C.tinta, marginTop: 14, opacity: 0.85 }}>
+            <div style={{ fontFamily: "Montserrat", fontSize: 18, letterSpacing: 4, color: C.tinta, opacity: 0.85 }}>
               {recepcion ? `${recepcion.lugar.toUpperCase()} · ${recepcion.hora.toUpperCase()}` : ""}
             </div>
-            <div style={{ fontFamily: "Cormorant", fontStyle: "italic", fontSize: 26, color: C.vino, marginTop: 8 }}>
+            <div style={{ fontFamily: "Cormorant", fontStyle: "italic", fontSize: 26, color: C.vino, marginTop: 6 }}>
               Presenta este código en la entrada del salón
             </div>
           </div>
