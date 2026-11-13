@@ -164,3 +164,17 @@ body {
     transform: translateY(8px);
   }
 }
+@keyframes hoja {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes barrido {
+  0%,
+  100% {
+    top: 12%;
+  }
+  50% {
+    top: 88%;
+  }
+}
